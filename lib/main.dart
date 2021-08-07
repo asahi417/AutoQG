@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://t5qg-ijnzg4eymq-uc.a.run.app/question_generation');
 
-
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/squad_test_sample.txt');
 }
