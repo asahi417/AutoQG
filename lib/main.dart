@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +9,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:url_launcher/url_launcher.dart';
 
 
-const API_URL = String.fromEnvironment('API_URL', defaultValue: 'http://127.0.0.1:8000/question_generation');
+const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://t5qg-ijnzg4eymq-uc.a.run.app/question_generation');
+
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/squad_test_sample.txt');
@@ -35,7 +38,7 @@ Future<Album> createAlbum(
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to create album.');
+    throw Exception('Ops something went wrong! Please try other inputs!');
   }
 }
 
@@ -50,9 +53,27 @@ class Album {
 
 void main() => runApp(MyApp());
 
-const _url = 'mailto:asahi1992ushio@gmail.com?subject=Inquiry about AutoQG &body=';
-void _launchURL() async =>
-    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+// const _url = 'mailto:asahi1992ushio@gmail.com?subject=Inquiry about AutoQG &body=';
+// void _launchEmail() async =>
+//     await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+
+_launchEmail() async {
+  const url = 'mailto:asahi1992ushio@gmail.com?subject=Inquiry about AutoQG &body=';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+_launchHP() async {
+  const url = 'https://asahi417.github.io/';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -75,6 +96,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var controllerContext = TextEditingController();
   var controllerHighlight = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   Future<Album>? _futureAlbum;
   double beamSize = 4;
 
@@ -127,25 +149,27 @@ class _MyHomePageState extends State<MyHomePage> {
           text: "Automatic question & answer generation achieved by AI models trained on an end-to-end sentence generation.",
           style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),
         ),
-        new TextSpan(text: "\n\n  "),
+        new TextSpan(text: "\n\n"),
         WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
         new TextSpan(text: " Model Variation: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
-        new TextSpan(text: "Larger the model is, better it is in the end task. We only deploy the smallest model for this live demo "
-            "and more powerful models are available for requests.\n  "),
+        new TextSpan(text: "The quality depends on the model size, and this live demo relies on the smallest model so "
+            "it would not reach the bar yet larger models might be able to overcome it.\n"
+        ),
         WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
         new TextSpan(text: " Custom Training: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
-        new TextSpan(text: "If you have a dataset, why don't you let the models to learn on it? We highly recommend an additional training on your own datasets as this can be "
-            "the Holy Grail for models.\n "),
+        new TextSpan(text: "All the models so far are trained on public datasets but they can further train on any private datasets, "
+            "which is usually recommended to boost end task accuracy.\n"
+        ),
         WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
         new TextSpan(text: " Multilinguality: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
-        new TextSpan(text: "We leverage the state-of-the-art mutilingual language models that covers more than 100 languages. "),
+        new TextSpan(text: "The state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales."),
         new TextSpan(text: "\n\n"),
         new TextSpan(
           text: "Questions? Send to us!",
           style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
         WidgetSpan(child: IconButton(
           icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
-          onPressed: _launchURL,
+          onPressed: _launchEmail,
           tooltip: 'Send an e-mail',
         ))
         ,
@@ -186,7 +210,10 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.w300,
             color: Colors.white,
             fontFamily: "Raleway"),
-        text: "AutoQG are looking for partners to develop the technology together. "
+        children: [
+          new TextSpan(text: "We are open to any collaborations, supporters, and contributors. "),
+          new TextSpan(text: "Reach out to us!", style: new TextStyle(fontWeight: FontWeight.w700))
+        ]
     ),
   );
 
@@ -198,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.w300,
             color: Colors.black45,
             fontFamily: "Roboto"),
-        text: "AutoQG are looking for partners to develop the technology together. "
+        text: " "
     ),
   );
 
@@ -212,6 +239,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ScrollController _scrollController = ScrollController();
+
     return Scaffold(
         appBar: AppBar(
           actionsIconTheme: IconThemeData(
@@ -227,33 +257,30 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: <Widget>[
             IconButton(
                 icon: const Icon(Icons.email),
-                tooltip: 'Contact Us',
-                onPressed: _launchURL
+                tooltip: 'Contact',
+                onPressed: _launchEmail
             ),
             IconButton(
               icon: const Icon(Icons.supervised_user_circle),
-              tooltip: 'About us',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
+              tooltip: 'About Developer',
+              onPressed: _launchHP,
             ),
-            IconButton(
-              icon: const Icon(Icons.free_breakfast),
-              tooltip: 'Contact Us',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.language),
-              tooltip: 'Contact Us',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
-            )
+            // IconButton(
+            //   icon: const Icon(Icons.free_breakfast),
+            //   tooltip: 'Contact Us',
+            //   onPressed: () {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(content: Text('This is a snackbar')));
+            //   },
+            // ),
+            // IconButton(
+            //   icon: const Icon(Icons.language),
+            //   tooltip: 'Contact Us',
+            //   onPressed: () {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(content: Text('This is a snackbar')));
+            //   },
+            // )
           ],
           // <Widget>[
           backgroundColor: Color(0xFFFFFFF6),
@@ -263,225 +290,229 @@ class _MyHomePageState extends State<MyHomePage> {
           // toolbarOpacity: 0.0
         ),
         body: SingleChildScrollView(
-            // controller: _scrollController,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 10),
-                  subTitle,
-                  SizedBox(height: 20),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 430.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(width: 20),
-                        Expanded(
-                            child: Column(
-                                children: [
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter some text';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                        labelText: 'Enter a document to generate question & answer.',
-                                        border: OutlineInputBorder()
-                                    ),
-                                    maxLines: 10,
-                                    controller: controllerContext,
-                                  ),
-                                  SizedBox(height: 10),
-                                  TextFormField(
-                                    // initialValue: 'aa',
-                                    decoration: InputDecoration(
-                                        labelText: '(Optional) Specify the term that should be the answer.',
-                                        border: OutlineInputBorder()
-                                    ),
-                                    maxLines: 1,
-                                    controller: controllerHighlight,
-                                  ),
-                                  SizedBox(height: 20),
-                                  Column(
-                                      children: [
-                                        Slider(
-                                            value: beamSize,
-                                            min: 1,
-                                            max: 8,
-                                            divisions: 7,
-                                            label: "Beam size: ${beamSize.round().toString()} (improve generation quality)",
-                                            onChanged: (double value) {
-                                              setState(() {beamSize = value;});
-                                            }),
-                                        // SizedBox(width: 10),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+            controller: _scrollController,
+            child:
+            Form(
+                key: _formKey,
+                child:
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      subTitle,
+                      SizedBox(height: 20),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: 430.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(width: 20),
+                            Expanded(
+                                child: Column(
+                                    children: [
+                                      TextFormField(
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter some text';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                            labelText: 'Enter a document to generate question & answer.',
+                                            border: OutlineInputBorder()
+                                        ),
+                                        maxLines: 10,
+                                        controller: controllerContext,
+                                      ),
+                                      SizedBox(height: 10),
+                                      TextFormField(
+                                        // initialValue: 'aa',
+                                        decoration: InputDecoration(
+                                            labelText: '(Optional) Specify the term that should be the answer.',
+                                            border: OutlineInputBorder()
+                                        ),
+                                        maxLines: 1,
+                                        controller: controllerHighlight,
+                                      ),
+                                      SizedBox(height: 20),
+                                      Column(
                                           children: [
-                                            ElevatedButton.icon(
-                                              onPressed: () {
-                                                // Future<Album>? _futureAlbum;
-                                                // _futureAlbum = null;
-                                                setState(() {});
-                                                setState(() {
-                                                  _futureAlbum = createAlbum(
-                                                      controllerContext.text,
-                                                      controllerHighlight.text,
-                                                      beamSize.round()
-                                                  );
-                                                });
-                                                controllerContext = TextEditingController(text: controllerContext.text);
-                                                controllerHighlight = TextEditingController(text: controllerHighlight.text);
-                                              },
-                                              icon: Icon(Icons.upload_outlined),
-                                              label: Text('Generate'),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.teal,
-                                                onPrimary: Colors.white,
-                                                onSurface: Colors.grey,
-                                              ),
-                                            ),
-                                            SizedBox(width: 10),
-                                            ElevatedButton.icon(
-                                              onPressed: () {
-                                                controllerContext.clear();
-                                                controllerHighlight.clear();
-                                              },
-                                              icon: Icon(Icons.delete_outline),
-                                              label: Text('Reset'),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.black87,
-                                                onPrimary: Colors.white,
-                                                onSurface: Colors.grey,
-                                              ),
-                                            ),
-                                            SizedBox(width: 10),
-                                            ElevatedButton.icon(
-                                              onPressed: () {
-                                                setState(() {});
-                                                controllerContext = TextEditingController(text: (listExample..shuffle()).first);
-                                                controllerHighlight = TextEditingController();
-                                              },
-                                              icon: Icon(Icons.sports_esports_outlined),
-                                              label: Text('Example'),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.pink[800],
-                                                onPrimary: Colors.white,
-                                                onSurface: Colors.grey,
-                                              ),
+                                            Slider(
+                                                value: beamSize,
+                                                min: 1,
+                                                max: 8,
+                                                divisions: 7,
+                                                label: "Beam size: ${beamSize.round().toString()} (improve generation quality)",
+                                                onChanged: (double value) {
+                                                  setState(() {beamSize = value;});
+                                                }),
+                                            // SizedBox(width: 10),
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton.icon(
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!.validate()) {
+                                                      setState(() {});
+                                                      setState(() {
+                                                        _futureAlbum = createAlbum(
+                                                            controllerContext.text,
+                                                            controllerHighlight.text,
+                                                            beamSize.round()
+                                                        );
+                                                      });
+                                                      controllerContext = TextEditingController(text: controllerContext.text);
+                                                      controllerHighlight = TextEditingController(text: controllerHighlight.text);
+                                                  }},
+                                                  icon: Icon(Icons.upload_outlined),
+                                                  label: Text('Generate'),
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Colors.teal,
+                                                    onPrimary: Colors.white,
+                                                    onSurface: Colors.grey,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                ElevatedButton.icon(
+                                                  onPressed: () {
+                                                      controllerContext.clear();
+                                                      controllerHighlight.clear();
+                                                  },
+                                                  icon: Icon(Icons.delete_outline),
+                                                  label: Text('Reset'),
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Colors.black87,
+                                                    onPrimary: Colors.white,
+                                                    onSurface: Colors.grey,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10),
+                                                ElevatedButton.icon(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                    controllerContext = TextEditingController(text: (listExample..shuffle()).first);
+                                                    controllerHighlight = TextEditingController();
+                                                  },
+                                                  icon: Icon(Icons.sports_esports_outlined),
+                                                  label: Text('Example'),
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Colors.pink[800],
+                                                    onPrimary: Colors.white,
+                                                    onSurface: Colors.grey,
+                                                  ),
+                                                )
+                                              ],
                                             )
-                                          ],
-                                        )
-                                      ]
-                                  ),
-                                ]
-                            )
+                                          ]
+                                      ),
+                                    ]
+                                )
+                            ),
+                            SizedBox(width: 30),
+                            Expanded(child:
+                            SingleChildScrollView(child:Container(
+                              child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(),
+                            ),)
+                            ),
+                            SizedBox(width: 20)
+                          ],
                         ),
-                        SizedBox(width: 30),
-                        Expanded(child:
-                        SingleChildScrollView(child:Container(
-                          child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(),
-                        ),)
-                        ),
-                        SizedBox(width: 20)
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    // width: 1500.0,
-                    color: Color(0xFFA8906F),
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 30,),
-                        conceptHeader,
-                        SizedBox(height: 8,),
-                        Container(
-                            height: 3,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.white),
-                                borderRadius: BorderRadius.all(Radius.circular(20))
-                            )),
-                        SizedBox(height: 20),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(width: 40,),
-                              // Container(width: 20, color: Colors.white),
-                              Expanded(child: conceptBody),
-                              Expanded(child: Container(
-                                width: 160,
-                                height: 160,
-                                child: FittedBox(child: Image.asset('assets/model.png'),),
-                                ),
-                              ),
-                              SizedBox(width: 40,),
-                            ]
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      width: double.infinity,
-                      // width: 1500.0,
-                      color: Color(0xFFFFFFF6),
-                      child: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        // width: 1500.0,
+                        color: Color(0xFFA8906F),
+                        child:  Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(height: 20,),
-                            solutionHeaderTop,
+                            SizedBox(height: 30,),
+                            conceptHeader,
                             SizedBox(height: 8,),
                             Container(
                                 height: 3,
                                 width: 100,
                                 decoration: BoxDecoration(
-                                    color: Colors.black45,
-                                    border: Border.all(color: Colors.black45),
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.white),
                                     borderRadius: BorderRadius.all(Radius.circular(20))
-                                )
-                            ),
-                            solutionHeaderBottom,
-                            Container(
-                              width: 500,
-                              height: 400,
-                              child: FittedBox(child: Image.asset('assets/solutions.png'),),
-                            ),
-                            // SizedBox(height: 10,),
+                                )),
                             SizedBox(height: 20),
-                          ]
-                      )
-                  ),
-                  Container(
-                      width: double.infinity,
-                      // width: 1500.0,
-                      color: Color(0xFF444729),
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 20,),
-                            footerHeader,
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(width: 40,),
+                                  // Container(width: 20, color: Colors.white),
+                                  Expanded(child: conceptBody),
+                                  Expanded(child: Container(
+                                    width: 160,
+                                    height: 160,
+                                    child: FittedBox(child: Image.asset('assets/model.png'),),
+                                  ),
+                                  ),
+                                  SizedBox(width: 40,),
+                                ]
+                            ),
                             SizedBox(height: 20),
-                          ]
-                      )
-                  ),
-                ]
+                          ],
+                        ),
+                      ),
+                      Container(
+                          width: double.infinity,
+                          // width: 1500.0,
+                          color: Color(0xFFFFFFF6),
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 20,),
+                                solutionHeaderTop,
+                                SizedBox(height: 8,),
+                                Container(
+                                    height: 3,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        color: Colors.black45,
+                                        border: Border.all(color: Colors.black45),
+                                        borderRadius: BorderRadius.all(Radius.circular(20))
+                                    )
+                                ),
+                                solutionHeaderBottom,
+                                Container(
+                                  width: 500,
+                                  height: 400,
+                                  child: FittedBox(child: Image.asset('assets/solutions.png'),),
+                                ),
+                                // SizedBox(height: 10,),
+                                SizedBox(height: 20),
+                              ]
+                          )
+                      ),
+                      Container(
+                          width: double.infinity,
+                          // width: 1500.0,
+                          color: Color(0xFF444729),
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 20,),
+                                footerHeader,
+                                SizedBox(height: 20),
+                              ]
+                          )
+                      ),
+                    ]
+                )
             )
         )
     );
@@ -493,11 +524,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return FutureBuilder<Album>(
       future: _futureAlbum,
       builder: (context, snapshot) {
-        // switch (snapshot.connectionState) {
-        // }
-        //   if (ConnectionState.done){
-        if (snapshot.connectionState != ConnectionState.waiting) {
-          // if (snapshot.hasData) {
+        if (snapshot.connectionState != ConnectionState.waiting && !snapshot.hasError) {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
