@@ -602,8 +602,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     for ( var i in snapshot.data!.qa)
-                      new RichText(
-                          text: new TextSpan(
+                      new SelectableText.rich(
+                          new TextSpan(
                               style: new TextStyle(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.w400,
