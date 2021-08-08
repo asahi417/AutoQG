@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   var conceptBody = new RichText(
-    textAlign: TextAlign.left,
+    textAlign: TextAlign.center,
     text: new TextSpan(
       style: new TextStyle(
           fontSize: 16.0,
@@ -149,20 +149,26 @@ class _MyHomePageState extends State<MyHomePage> {
           style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),
         ),
         new TextSpan(text: "\n\n"),
-        WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: " Model Variation: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
+        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
+        // new TextSpan(text: "Model Variation", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
+        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
         new TextSpan(text: "The quality depends on the model size, and this live demo relies on the smallest model so "
-            "it would not reach the bar yet larger models might be able to overcome it.\n"
+            "it would not reach the bar yet larger models might be able to overcome it "
         ),
-        WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: " Custom Training: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
-        new TextSpan(text: "All the models so far are trained on public datasets but they can further train on any private datasets, "
-            "which is usually recommended to boost end task accuracy.\n"
+        new TextSpan(text: "(Model Variation)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
+        // new TextSpan(text: "Custom Training", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
+        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
+        new TextSpan(text: ". Also, all the models so far are trained on public datasets but they can further train on any private datasets very easily, "
+            "which is usually recommended to boost end task accuracy "
         ),
-        WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: " Multilinguality: ", style: new TextStyle(fontWeight: FontWeight.w300,),),
-        new TextSpan(text: "The state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales."),
-        new TextSpan(text: "\n\n"),
+        new TextSpan(text: "(Custom Training)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
+        // new TextSpan(text: "Multilinguality", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
+        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
+        new TextSpan(text: ". Finally, the state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales "),
+        new TextSpan(text: "(Multilinguality)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        new TextSpan(text: ".\n\n"),
         new TextSpan(
           text: "Questions? Send to us!",
           style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
@@ -444,22 +450,26 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 150,
                               child: FittedBox(child: Image.asset('assets/model.png'),),
                             ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(width: 40,),
-                                  // Container(width: 20, color: Colors.white),
-                                  Expanded(child: conceptBody),
-                                  // Expanded(child: Container(
-                                  //   width: 160,
-                                  //   height: 160,
-                                  //   child: FittedBox(child: Image.asset('assets/model.png'),),
-                                  // ),
-                                  // ),
-                                  SizedBox(width: 40,),
-                                ]
+                            ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 1000.0),
+                              child: conceptBody,
                             ),
+                            // Row(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: <Widget>[
+                            //       SizedBox(width: 40,),
+                            //       // Container(width: 20, color: Colors.white),
+                            //       Expanded(child: conceptBody),
+                            //       // Expanded(child: Container(
+                            //       //   width: 160,
+                            //       //   height: 160,
+                            //       //   child: FittedBox(child: Image.asset('assets/model.png'),),
+                            //       // ),
+                            //       // ),
+                            //       SizedBox(width: 40,),
+                            //     ]
+                            // ),
                             SizedBox(height: 20),
                           ],
                         ),
@@ -509,9 +519,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(height: 20,),
+                                SizedBox(height: 40,),
                                 footerHeader,
-                                SizedBox(height: 20),
+                                SizedBox(height: 40),
                               ]
                           )
                       ),
