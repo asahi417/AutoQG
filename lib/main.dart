@@ -438,7 +438,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     border: Border.all(color: Colors.white),
                                     borderRadius: BorderRadius.all(Radius.circular(20))
                                 )),
-                            SizedBox(height: 20),
+                            // SizedBox(height: 20),
+                            Container(
+                              width: 400,
+                              height: 150,
+                              child: FittedBox(child: Image.asset('assets/model.png'),),
+                            ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,12 +451,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                   SizedBox(width: 40,),
                                   // Container(width: 20, color: Colors.white),
                                   Expanded(child: conceptBody),
-                                  Expanded(child: Container(
-                                    width: 160,
-                                    height: 160,
-                                    child: FittedBox(child: Image.asset('assets/model.png'),),
-                                  ),
-                                  ),
+                                  // Expanded(child: Container(
+                                  //   width: 160,
+                                  //   height: 160,
+                                  //   child: FittedBox(child: Image.asset('assets/model.png'),),
+                                  // ),
+                                  // ),
                                   SizedBox(width: 40,),
                                 ]
                             ),
