@@ -307,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       subTitle,
                       SizedBox(height: 20),
                       ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 430.0),
+                        constraints: BoxConstraints(maxHeight: 450.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -351,7 +351,60 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 onChanged: (double value) {
                                                   setState(() {beamSize = value;});
                                                 }),
-                                            // SizedBox(width: 10),
+
+                                            // SizedBox(height: 5),
+                                            // ElevatedButton.icon(
+                                            //   onPressed: () {
+                                            //     if (_formKey.currentState!.validate()) {
+                                            //       setState(() {});
+                                            //       setState(() {
+                                            //         _futureAlbum = createAlbum(
+                                            //             controllerContext.text,
+                                            //             controllerHighlight.text,
+                                            //             beamSize.round()
+                                            //         );
+                                            //       });
+                                            //       controllerContext = TextEditingController(text: controllerContext.text);
+                                            //       controllerHighlight = TextEditingController(text: controllerHighlight.text);
+                                            //     }},
+                                            //   icon: Icon(Icons.upload_outlined),
+                                            //   label: Text(' Run  '),
+                                            //   style: ElevatedButton.styleFrom(
+                                            //     primary: Colors.teal,
+                                            //     onPrimary: Colors.white,
+                                            //     onSurface: Colors.grey,
+                                            //   ),
+                                            // ),
+                                            // SizedBox(height: 5),
+                                            // ElevatedButton.icon(
+                                            //   onPressed: () {
+                                            //     controllerContext.clear();
+                                            //     controllerHighlight.clear();
+                                            //   },
+                                            //   icon: Icon(Icons.delete_outline),
+                                            //   label: Text('Reset '),
+                                            //   style: ElevatedButton.styleFrom(
+                                            //     primary: Colors.black87,
+                                            //     onPrimary: Colors.white,
+                                            //     onSurface: Colors.grey,
+                                            //   ),
+                                            // ),
+                                            // SizedBox(height: 5),
+                                            // ElevatedButton.icon(
+                                            //   onPressed: () {
+                                            //     setState(() {});
+                                            //     controllerContext = TextEditingController(text: (listExample..shuffle()).first);
+                                            //     controllerHighlight = TextEditingController();
+                                            //   },
+                                            //   icon: Icon(Icons.sports_esports_outlined),
+                                            //   label: Text('Sample'),
+                                            //   style: ElevatedButton.styleFrom(
+                                            //     primary: Colors.pink[800],
+                                            //     onPrimary: Colors.white,
+                                            //     onSurface: Colors.grey,
+                                            //   ),
+                                            // ),
+
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.center,
@@ -371,7 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       controllerHighlight = TextEditingController(text: controllerHighlight.text);
                                                   }},
                                                   icon: Icon(Icons.upload_outlined),
-                                                  label: Text('Generate'),
+                                                  label: Text('Run'),
                                                   style: ElevatedButton.styleFrom(
                                                     primary: Colors.teal,
                                                     onPrimary: Colors.white,
@@ -400,7 +453,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     controllerHighlight = TextEditingController();
                                                   },
                                                   icon: Icon(Icons.sports_esports_outlined),
-                                                  label: Text('Example'),
+                                                  label: Text('Sample'),
                                                   style: ElevatedButton.styleFrom(
                                                     primary: Colors.pink[800],
                                                     onPrimary: Colors.white,
