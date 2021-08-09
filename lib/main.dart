@@ -321,7 +321,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            labelText: 'Enter a document to generate question & answer.',
+                                            labelText: 'Enter a document or try `sample` below for the question & answer generate.',
                                             border: OutlineInputBorder()
                                         ),
                                         maxLines: 10,
