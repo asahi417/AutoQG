@@ -5,9 +5,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 
-const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://t5qg-ijnzg4eymq-uc.a.run.app/question_generation');
+
+const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://lm-question-generation-ijnzg4eymq-uc.a.run.app/question_generation');
+// const API_URL = String.fromEnvironment('API_URL', defaultValue: 'http://127.0.0.1:8080/question_generation_dummy');
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/squad_test_sample.txt');
@@ -128,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.white,
         fontFamily: 'Raleway',
       ),
-      text: "End-to-end Language Models Training on Complex Sentence Generation",
+      text: "Powered by language model finetuning on sequence generation.",
     ),
   );
 
@@ -142,40 +145,61 @@ class _MyHomePageState extends State<MyHomePage> {
           fontFamily: 'Roboto'
       ),
       children: [
-        new TextSpan(
-          text: "Automatic question & answer generation achieved by AI models trained on an end-to-end sentence generation.",
-          style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),
-        ),
-        new TextSpan(text: "\n\n"),
+        // new TextSpan(
+        //   text: "Seq2seq language models finetuned on question generation & answer extraction jointly .",
+        //   style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),
+        // ),
+        // new TextSpan(text: "\n\n"),
         // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
         // new TextSpan(text: "Model Variation", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
         // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: "The quality depends on the model size, and this live demo relies on the smallest model so "
-            "it would not reach the bar yet larger models might be able to overcome it "
+        new TextSpan(text: "This web application is built to demonstrate the "),
+        new TextSpan(text: "Automatic Question & Answer Generation",
+            style: new TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w300)
         ),
-        new TextSpan(text: "(Model Variation)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        new TextSpan(text: " capacity of our language models. Currently, we deploy our smallest model which can only handle documents "
+            "in English less than 512 characters. "),
+        new TextSpan(text: "We release a few more models with different backbone architectures and parameter size at "),
+        new TextSpan(
+            style: new TextStyle(fontWeight: FontWeight.w400, fontStyle: FontStyle.italic, color: Colors.blue),
+            text: "https://github.com/asahi417/lm-question-generation",
+            recognizer: TapGestureRecognizer()..onTap =  () async{
+              var url = "https://github.com/asahi417/lm-question-generation";
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            }
+        ),
+        new TextSpan(text: "."),
+        new TextSpan(text: " The repository also contains the backend API implementation for the demo service."),
+        // new TextSpan(text: "The quality depends on the model size, and this live demo relies on the smallest model so "
+        //     "it would not reach the bar yet larger models might be able to overcome it "
+        // ),
+        // new TextSpan(text: "(Model Variation)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
         // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
         // new TextSpan(text: "Custom Training", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
         // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: ". Also, all the models so far are trained on public datasets but they can further train on any private datasets very easily, "
-            "which is usually recommended to boost end task accuracy "
-        ),
-        new TextSpan(text: "(Custom Training)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        // new TextSpan(text: ". Also, all the models so far are trained on public datasets but they can further train on any private datasets very easily, "
+        //     "which is usually recommended to boost end task accuracy "
+        // ),
+        // new TextSpan(text: "(Custom Training)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
         // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
         // new TextSpan(text: "Multilinguality", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
         // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: ". Finally, the state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales "),
-        new TextSpan(text: "(Multilinguality)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
-        new TextSpan(text: ".\n\n"),
-        new TextSpan(
-          text: "Questions? Send to us!",
-          style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
-        WidgetSpan(child: IconButton(
-          icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
-          onPressed: _launchEmail,
-          tooltip: 'Send an e-mail',
-        ))
-        ,
+        // new TextSpan(text: ". Finally, the state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales "),
+        // new TextSpan(text: "(Multilinguality)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
+        // new TextSpan(text: "\n\n"),
+        // new TextSpan(
+        //   text: "Questions? Send to us!",
+        //   style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
+        // WidgetSpan(child: IconButton(
+        //   icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
+        //   onPressed: _launchEmail,
+        //   tooltip: 'Send an e-mail',
+        // ))
+        // ,
       ],
     ),
   );
@@ -201,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.w300,
             color: Colors.black45,
             fontFamily: "Roboto"),
-        text: "QA generation has a huge potential."
+        text: "Q&A generation has a huge potential."
     ),
   );
 
@@ -214,8 +238,16 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.white,
             fontFamily: "Raleway"),
         children: [
-          new TextSpan(text: "We are open to any collaborations, supporters, and contributors. "),
-          new TextSpan(text: "Reach out to us!", style: new TextStyle(fontWeight: FontWeight.w700))
+          new TextSpan(
+            text: "If you have any questions or inquiries, send to us!",
+            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
+          WidgetSpan(child: IconButton(
+            icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
+            onPressed: _launchEmail,
+            tooltip: 'E-mail',
+          ))
+          // new TextSpan(text: "We are open to any collaborations, supporters, and contributors. "),
+          // new TextSpan(text: "Reach out to us!", style: new TextStyle(fontWeight: FontWeight.w700))
         ]
     ),
   );
@@ -265,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             IconButton(
               icon: const Icon(Icons.supervised_user_circle),
-              tooltip: 'About Developer',
+              tooltip: 'About the developer',
               onPressed: _launchHP,
             ),
             // IconButton(
@@ -321,7 +353,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            labelText: 'Enter a document or try `sample` below for the question & answer generate.',
+                                            labelText: 'Enter a document or press `Sample` below.',
                                             border: OutlineInputBorder()
                                         ),
                                         maxLines: 10,
@@ -331,7 +363,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       TextFormField(
                                         // initialValue: 'aa',
                                         decoration: InputDecoration(
-                                            labelText: '(Optional) Specify the term that should be the answer.',
+                                            labelText: '(Optional) Specify an answer in the document.',
                                             border: OutlineInputBorder()
                                         ),
                                         maxLines: 1,
@@ -570,9 +602,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(height: 40,),
+                                SizedBox(height: 10,),
                                 footerHeader,
-                                SizedBox(height: 40),
+                                SizedBox(height: 15),
                               ]
                           )
                       ),

@@ -1,4 +1,4 @@
-# web
+# AutoQG frontend implementation
 
 A new Flutter project.
 
