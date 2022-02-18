@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/gestures.dart';
-
-
 
 const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://lm-question-generation-ijnzg4eymq-uc.a.run.app/question_generation');
-// const API_URL = String.fromEnvironment('API_URL', defaultValue: 'http://127.0.0.1:8080/question_generation_dummy');
+// const API_URL = String.fromEnvironment('API_URL', defaultValue: 'http://127.0.0.1:8080/question_generation');
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/squad_test_sample.txt');
@@ -19,7 +17,8 @@ Future<String> loadAsset() async {
 Future<Album> createAlbum(
     String inputText,
     String highlight,
-    int beamSize
+    int numQuestions,
+    String answerModel
     ) async {
   final response = await http.post(
     Uri.parse(API_URL),
@@ -27,7 +26,9 @@ Future<Album> createAlbum(
     body: jsonEncode({
       'input_text': inputText,
       'highlight': highlight,
-      'num_beam': beamSize
+      'num_questions': numQuestions,
+      'answer_model': answerModel.replaceAll('span', 'language_model').replaceAll('keyword', 'keyword_extraction')
+      // 'num_questions'
     }),
   );
 
@@ -52,10 +53,6 @@ class Album {
 
 
 void main() => runApp(MyApp());
-
-// const _url = 'mailto:asahi1992ushio@gmail.com?subject=Inquiry about AutoQG &body=';
-// void _launchEmail() async =>
-//     await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
 
 _launchEmail() async {
   const url = 'mailto:asahi1992ushio@gmail.com?subject=Inquiry about AutoQG &body=';
@@ -98,7 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var controllerHighlight = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Future<Album>? _futureAlbum;
-  double beamSize = 4;
+  double numQuestions = 5;
+  String answerModel = 'keyword';
+  var items =  ['keyword', 'span'];
 
   var subTitle = new RichText(
     text: new TextSpan(
@@ -131,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.white,
         fontFamily: 'Raleway',
       ),
-      text: "Powered by language model finetuning on sequence generation.",
+      text: "Powered by language model fine-tuning on sequence generation.",
     ),
   );
 
@@ -144,63 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.white,
           fontFamily: 'Roboto'
       ),
-      children: [
-        // new TextSpan(
-        //   text: "Seq2seq language models finetuned on question generation & answer extraction jointly .",
-        //   style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),
-        // ),
-        // new TextSpan(text: "\n\n"),
-        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
-        // new TextSpan(text: "Model Variation", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
-        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        new TextSpan(text: "This web application is built to demonstrate the "),
-        new TextSpan(text: "Automatic Question & Answer Generation",
-            style: new TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w300)
-        ),
-        new TextSpan(text: " capacity of our language models. Currently, we deploy our smallest model which can only handle documents "
-            "in English less than 512 characters. "),
-        new TextSpan(text: "We release a few more models with different backbone architectures and parameter size at "),
-        new TextSpan(
-            style: new TextStyle(fontWeight: FontWeight.w400, fontStyle: FontStyle.italic, color: Colors.blue),
-            text: "https://github.com/asahi417/lm-question-generation",
-            recognizer: TapGestureRecognizer()..onTap =  () async{
-              var url = "https://github.com/asahi417/lm-question-generation";
-              if (await canLaunch(url)) {
-                await launch(url);
-              } else {
-                throw 'Could not launch $url';
-              }
-            }
-        ),
-        new TextSpan(text: "."),
-        new TextSpan(text: " The repository also contains the backend API implementation for the demo service."),
-        // new TextSpan(text: "The quality depends on the model size, and this live demo relies on the smallest model so "
-        //     "it would not reach the bar yet larger models might be able to overcome it "
-        // ),
-        // new TextSpan(text: "(Model Variation)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
-        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
-        // new TextSpan(text: "Custom Training", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
-        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        // new TextSpan(text: ". Also, all the models so far are trained on public datasets but they can further train on any private datasets very easily, "
-        //     "which is usually recommended to boost end task accuracy "
-        // ),
-        // new TextSpan(text: "(Custom Training)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
-        // WidgetSpan(child: Icon(Icons.chevron_left_sharp , size: 18, color: Colors.white,),),
-        // new TextSpan(text: "Multilinguality", style: new TextStyle(fontWeight: FontWeight.w300, fontStyle: FontStyle.italic),),
-        // WidgetSpan(child: Icon(Icons.chevron_right_sharp , size: 18, color: Colors.white,),),
-        // new TextSpan(text: ". Finally, the state-of-the-art mutilingual language models cover more than 100 languages that enables the QA generation on non-English locales "),
-        // new TextSpan(text: "(Multilinguality)", style: new TextStyle(fontWeight: FontWeight.w200, fontStyle: FontStyle.italic),),
-        // new TextSpan(text: "\n\n"),
-        // new TextSpan(
-        //   text: "Questions? Send to us!",
-        //   style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
-        // WidgetSpan(child: IconButton(
-        //   icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
-        //   onPressed: _launchEmail,
-        //   tooltip: 'Send an e-mail',
-        // ))
-        // ,
-      ],
     ),
   );
 
@@ -225,7 +167,6 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.w300,
             color: Colors.black45,
             fontFamily: "Roboto"),
-        text: "Q&A generation has a huge potential."
     ),
   );
 
@@ -246,21 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: _launchEmail,
             tooltip: 'E-mail',
           ))
-          // new TextSpan(text: "We are open to any collaborations, supporters, and contributors. "),
-          // new TextSpan(text: "Reach out to us!", style: new TextStyle(fontWeight: FontWeight.w700))
         ]
-    ),
-  );
-
-  var footerBody = new RichText(
-    textAlign: TextAlign.center,
-    text: new TextSpan(
-        style: new TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.w300,
-            color: Colors.black45,
-            fontFamily: "Roboto"),
-        text: " "
     ),
   );
 
@@ -300,29 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'About the developer',
               onPressed: _launchHP,
             ),
-            // IconButton(
-            //   icon: const Icon(Icons.free_breakfast),
-            //   tooltip: 'Contact Us',
-            //   onPressed: () {
-            //     ScaffoldMessenger.of(context).showSnackBar(
-            //         const SnackBar(content: Text('This is a snackbar')));
-            //   },
-            // ),
-            // IconButton(
-            //   icon: const Icon(Icons.language),
-            //   tooltip: 'Contact Us',
-            //   onPressed: () {
-            //     ScaffoldMessenger.of(context).showSnackBar(
-            //         const SnackBar(content: Text('This is a snackbar')));
-            //   },
-            // )
           ],
-          // <Widget>[
           backgroundColor: Color(0xFFFFFFF6),
-          // backgroundColor: Colors.white,
-          // elevation: 0.0,
-          // bottomOpacity: 0.0,
-          // toolbarOpacity: 0.0
         ),
         body: SingleChildScrollView(
             controller: _scrollController,
@@ -353,88 +259,93 @@ class _MyHomePageState extends State<MyHomePage> {
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            labelText: 'Enter a document or press `Sample` below.',
+                                            labelText: 'Enter text or press `Sample` below to try sample documents.',
                                             border: OutlineInputBorder()
                                         ),
                                         maxLines: 10,
                                         controller: controllerContext,
                                       ),
                                       SizedBox(height: 10),
-                                      TextFormField(
-                                        // initialValue: 'aa',
-                                        decoration: InputDecoration(
-                                            labelText: '(Optional) Specify an answer in the document.',
-                                            border: OutlineInputBorder()
-                                        ),
-                                        maxLines: 1,
-                                        controller: controllerHighlight,
+                                      Row(
+                                        children: [
+                                          Expanded(child: TextFormField(
+                                              // initialValue: 'aa',
+                                              decoration: InputDecoration(
+                                                  labelText: '[Optional] Specify an answer from the text.',
+                                                  border: OutlineInputBorder()
+                                              ),
+                                              maxLines: 1,
+                                              controller: controllerHighlight,
+                                            ),
+                                          ),
+                                          SizedBox(width: 20),
+                                          Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children:[
+                                                RichText(
+                                                    textAlign: TextAlign.center,
+                                                    text: new TextSpan(
+                                                      text: 'Answer Type',
+                                                      style: new TextStyle(
+                                                          fontSize: 12.0,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.blue
+                                                          // fontFamily: 'Roboto'
+                                                      ),
+                                                    ),
+                                                ),
+                                                DropdownButton(
+                                                  value: answerModel,
+                                                  icon: Icon(Icons.keyboard_arrow_down),
+                                                  items: items.map((String items) {
+                                                    return DropdownMenuItem(value: items, child: Text(items));
+                                                  }).toList(),
+                                                  onChanged: (String? newValue){
+                                                    setState(() {answerModel = newValue!;});
+                                                  },
+                                                ),
+                                              ]
+                                          ),
+                                        ]
                                       ),
                                       SizedBox(height: 20),
                                       Column(
                                           children: [
-                                            Slider(
-                                                value: beamSize,
-                                                min: 1,
-                                                max: 8,
-                                                divisions: 7,
-                                                label: "Beam size: ${beamSize.round().toString()} (improve generation quality)",
-                                                onChanged: (double value) {
-                                                  setState(() {beamSize = value;});
-                                                }),
-
-                                            // SizedBox(height: 5),
-                                            // ElevatedButton.icon(
-                                            //   onPressed: () {
-                                            //     if (_formKey.currentState!.validate()) {
-                                            //       setState(() {});
-                                            //       setState(() {
-                                            //         _futureAlbum = createAlbum(
-                                            //             controllerContext.text,
-                                            //             controllerHighlight.text,
-                                            //             beamSize.round()
-                                            //         );
-                                            //       });
-                                            //       controllerContext = TextEditingController(text: controllerContext.text);
-                                            //       controllerHighlight = TextEditingController(text: controllerHighlight.text);
-                                            //     }},
-                                            //   icon: Icon(Icons.upload_outlined),
-                                            //   label: Text(' Run  '),
-                                            //   style: ElevatedButton.styleFrom(
-                                            //     primary: Colors.teal,
-                                            //     onPrimary: Colors.white,
-                                            //     onSurface: Colors.grey,
-                                            //   ),
-                                            // ),
-                                            // SizedBox(height: 5),
-                                            // ElevatedButton.icon(
-                                            //   onPressed: () {
-                                            //     controllerContext.clear();
-                                            //     controllerHighlight.clear();
-                                            //   },
-                                            //   icon: Icon(Icons.delete_outline),
-                                            //   label: Text('Reset '),
-                                            //   style: ElevatedButton.styleFrom(
-                                            //     primary: Colors.black87,
-                                            //     onPrimary: Colors.white,
-                                            //     onSurface: Colors.grey,
-                                            //   ),
-                                            // ),
-                                            // SizedBox(height: 5),
-                                            // ElevatedButton.icon(
-                                            //   onPressed: () {
-                                            //     setState(() {});
-                                            //     controllerContext = TextEditingController(text: (listExample..shuffle()).first);
-                                            //     controllerHighlight = TextEditingController();
-                                            //   },
-                                            //   icon: Icon(Icons.sports_esports_outlined),
-                                            //   label: Text('Sample'),
-                                            //   style: ElevatedButton.styleFrom(
-                                            //     primary: Colors.pink[800],
-                                            //     onPrimary: Colors.white,
-                                            //     onSurface: Colors.grey,
-                                            //   ),
-                                            // ),
-
+                                            Row(
+                                              // crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Slider(
+                                                      value: numQuestions,
+                                                      min: 1,
+                                                      max: 15,
+                                                      divisions: 14,
+                                                      label: "Number of questions: ${numQuestions.round().toString()}",
+                                                      onChanged: (double value) {
+                                                        setState(() {numQuestions = value;});
+                                                      }),
+                                                ),
+                                                // RichText(
+                                                //     // textAlign: TextAlign.center,
+                                                //     text: new TextSpan(
+                                                //         style: new TextStyle(
+                                                //             color: Colors.black,
+                                                //             fontFamily: "RobotoMono"),
+                                                //         text: isChecked ? "Language Model" : "Keyword-based")),
+                                                // Checkbox(
+                                                //     // title: Text("title text"),
+                                                //     checkColor: Colors.white,
+                                                //     value: isChecked,
+                                                //     onChanged: (bool? value) {
+                                                //       setState(() {
+                                                //         isChecked = value!;
+                                                //       });
+                                                //       },
+                                                // ),
+                                              ]
+                                            ),
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.center,
@@ -444,10 +355,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     if (_formKey.currentState!.validate()) {
                                                       setState(() {});
                                                       setState(() {
+                                                        // String answerModel = isChecked ? "language_model" : "keyword_extraction";
                                                         _futureAlbum = createAlbum(
                                                             controllerContext.text,
                                                             controllerHighlight.text,
-                                                            beamSize.round()
+                                                            numQuestions.round(),
+                                                            answerModel,
                                                         );
                                                       });
                                                       controllerContext = TextEditingController(text: controllerContext.text);
@@ -537,22 +450,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               constraints: BoxConstraints(maxWidth: 1000.0),
                               child: conceptBody,
                             ),
-                            // Row(
-                            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: <Widget>[
-                            //       SizedBox(width: 40,),
-                            //       // Container(width: 20, color: Colors.white),
-                            //       Expanded(child: conceptBody),
-                            //       // Expanded(child: Container(
-                            //       //   width: 160,
-                            //       //   height: 160,
-                            //       //   child: FittedBox(child: Image.asset('assets/model.png'),),
-                            //       // ),
-                            //       // ),
-                            //       SizedBox(width: 40,),
-                            //     ]
-                            // ),
                             SizedBox(height: 20),
                           ],
                         ),
@@ -562,8 +459,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           // width: 1500.0,
                           color: Color(0xFFFFFFF6),
                           child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -586,7 +481,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   height: 400,
                                   child: FittedBox(child: Image.asset('assets/solutions.png'),),
                                 ),
-                                // SizedBox(height: 10,),
                                 SizedBox(height: 20),
                               ]
                           )
