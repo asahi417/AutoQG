@@ -7,28 +7,32 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-const API_URL = String.fromEnvironment('API_URL', defaultValue: 'https://lm-question-generation-ijnzg4eymq-uc.a.run.app/question_generation');
-// const API_URL = String.fromEnvironment('API_URL', defaultValue: 'http://127.0.0.1:8080/question_generation');
+const API_URL = 'https://lm-question-generation-ijnzg4eymq-uc.a.run.app/question_generation';
+const API_URL_JA = 'https://lm-question-generation-ja-ijnzg4eymq-uc.a.run.app/question_generation';
+const SAMPLE_FILE = 'assets/squad_test_sample.txt';
+const SAMPLE_FILE_JA = 'assets/squad_test_sample_ja.txt';
 
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/squad_test_sample.txt');
+Future<String> loadAsset(String sampleFile) async {
+  return await rootBundle.loadString(sampleFile);
 }
 
 Future<Album> createAlbum(
     String inputText,
     String highlight,
     int numQuestions,
-    String answerModel
+    String answerModel,
+    String language,
     ) async {
+  String apiUrl = language == 'English' ? API_URL : API_URL_JA;
+  // String apiUrl = language == 'Japanese' ? API_URL_JA : API_URL_EN;
   final response = await http.post(
-    Uri.parse(API_URL),
+    Uri.parse(apiUrl),
     headers: <String, String>{'Content-Type': 'application/json'},
     body: jsonEncode({
       'input_text': inputText,
       'highlight': highlight,
       'num_questions': numQuestions,
       'answer_model': answerModel.replaceAll('span', 'language_model').replaceAll('keyword', 'keyword_extraction')
-      // 'num_questions'
     }),
   );
 
@@ -98,6 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double numQuestions = 5;
   String answerModel = 'keyword';
   var items =  ['keyword', 'span'];
+  String language = 'English';
+  var itemsLanguage =  ['English', 'Japanese'];
 
   var subTitle = new RichText(
     text: new TextSpan(
@@ -134,18 +140,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-  var conceptBody = new RichText(
-    textAlign: TextAlign.center,
-    text: new TextSpan(
-      style: new TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w100,
-          color: Colors.white,
-          fontFamily: 'Roboto'
-      ),
-    ),
-  );
-
   var solutionHeaderTop = new RichText(
     textAlign: TextAlign.center,
     text: new TextSpan(
@@ -156,17 +150,6 @@ class _MyHomePageState extends State<MyHomePage> {
             fontFamily: "Hahmlet"
         ),
         text: "SOLUTIONS"
-    ),
-  );
-
-  var solutionHeaderBottom = new RichText(
-    textAlign: TextAlign.center,
-    text: new TextSpan(
-        style: new TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w300,
-            color: Colors.black45,
-            fontFamily: "Roboto"),
     ),
   );
 
@@ -181,21 +164,24 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           new TextSpan(
             text: "If you have any questions or inquiries, send to us!",
-            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500,),),
+            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
           WidgetSpan(child: IconButton(
             icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
             onPressed: _launchEmail,
-            tooltip: 'E-mail',
-          ))
+            tooltip: 'E-mail'))
         ]
-    ),
+    )
   );
 
   // load sample from SQuAD test split
   List<String> listExample = [];
+  List<String> listExampleJa = [];
   _MyHomePageState() {
-    loadAsset().then((val) => setState(() {
+    loadAsset(SAMPLE_FILE).then((val) => setState(() {
       listExample = val.split("\n");
+    }));
+    loadAsset(SAMPLE_FILE_JA).then((val) => setState(() {
+      listExampleJa = val.split("\n");
     }));
   }
 
@@ -220,12 +206,22 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
                 icon: const Icon(Icons.email),
                 tooltip: 'Contact',
-                onPressed: _launchEmail
-            ),
+                onPressed: _launchEmail),
             IconButton(
               icon: const Icon(Icons.supervised_user_circle),
               tooltip: 'About the developer',
-              onPressed: _launchHP,
+              onPressed: _launchHP),
+            SizedBox(width: 15),
+            DropdownButton(
+              value: language,
+              iconEnabledColor: Colors.black,
+              icon: const Icon(Icons.language),
+              items: itemsLanguage.map((String items) {
+                return DropdownMenuItem(value: items, child: Text(items));
+              }).toList(),
+              onChanged: (String? newValue){
+                setState(() {language = newValue!;});
+              },
             ),
           ],
           backgroundColor: Color(0xFFFFFFF6),
@@ -269,7 +265,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Row(
                                         children: [
                                           Expanded(child: TextFormField(
-                                              // initialValue: 'aa',
                                               decoration: InputDecoration(
                                                   labelText: '[Optional] Specify an answer from the text.',
                                                   border: OutlineInputBorder()
@@ -290,8 +285,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       style: new TextStyle(
                                                           fontSize: 12.0,
                                                           fontWeight: FontWeight.w400,
-                                                          color: Colors.blue
-                                                          // fontFamily: 'Roboto'
+                                                          color: Colors.blue,
+                                                          fontFamily: 'RobotoMono'
                                                       ),
                                                     ),
                                                 ),
@@ -313,7 +308,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Column(
                                           children: [
                                             Row(
-                                              // crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 Expanded(
@@ -327,23 +321,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         setState(() {numQuestions = value;});
                                                       }),
                                                 ),
-                                                // RichText(
-                                                //     // textAlign: TextAlign.center,
-                                                //     text: new TextSpan(
-                                                //         style: new TextStyle(
-                                                //             color: Colors.black,
-                                                //             fontFamily: "RobotoMono"),
-                                                //         text: isChecked ? "Language Model" : "Keyword-based")),
-                                                // Checkbox(
-                                                //     // title: Text("title text"),
-                                                //     checkColor: Colors.white,
-                                                //     value: isChecked,
-                                                //     onChanged: (bool? value) {
-                                                //       setState(() {
-                                                //         isChecked = value!;
-                                                //       });
-                                                //       },
-                                                // ),
                                               ]
                                             ),
                                             Row(
@@ -355,12 +332,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     if (_formKey.currentState!.validate()) {
                                                       setState(() {});
                                                       setState(() {
-                                                        // String answerModel = isChecked ? "language_model" : "keyword_extraction";
                                                         _futureAlbum = createAlbum(
                                                             controllerContext.text,
                                                             controllerHighlight.text,
                                                             numQuestions.round(),
                                                             answerModel,
+                                                            language
                                                         );
                                                       });
                                                       controllerContext = TextEditingController(text: controllerContext.text);
@@ -392,7 +369,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 ElevatedButton.icon(
                                                   onPressed: () {
                                                     setState(() {});
-                                                    controllerContext = TextEditingController(text: (listExample..shuffle()).first);
+                                                    controllerContext = TextEditingController(
+                                                        text: language == 'English' ? (listExample..shuffle()).first : (listExampleJa..shuffle()).first
+                                                    );
                                                     controllerHighlight = TextEditingController();
                                                   },
                                                   icon: Icon(Icons.sports_esports_outlined),
@@ -446,10 +425,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 150,
                               child: FittedBox(child: Image.asset('assets/model.png'),),
                             ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: 1000.0),
-                              child: conceptBody,
-                            ),
                             SizedBox(height: 20),
                           ],
                         ),
@@ -475,7 +450,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                         borderRadius: BorderRadius.all(Radius.circular(20))
                                     )
                                 ),
-                                solutionHeaderBottom,
                                 Container(
                                   width: 500,
                                   height: 400,
