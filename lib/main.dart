@@ -35,11 +35,12 @@ Future<Album> createAlbum(
       'answer_model': answerModel.replaceAll('span', 'language_model').replaceAll('keyword', 'keyword_extraction')
     }),
   );
-
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body));
+    return Album.fromJson(jsonDecode(
+        language == 'English' ? response.body : utf8.decode(response.bodyBytes))
+    );
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
