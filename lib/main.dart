@@ -249,14 +249,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: Column(
                                     children: [
                                       TextFormField(
+                                        style: TextStyle(
+                                            fontFamily:language == 'English' ? 'RobotoMono' : "Noto Sans JP"
+                                        ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please enter some text';
+                                            return language == 'English' ? 'Please enter some text' : '文章を入力してください。';
                                           }
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            labelText: 'Enter text or press `Sample` below to try sample documents.',
+                                            labelText: language == 'English' ? 'Enter text or press `Sample` below to try sample documents.' : '文章を入力もしくは`Sample`をクリック。',
                                             border: OutlineInputBorder()
                                         ),
                                         maxLines: 10,
@@ -266,12 +269,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Row(
                                         children: [
                                           Expanded(child: TextFormField(
-                                              decoration: InputDecoration(
-                                                  labelText: '[Optional] Specify an answer from the text.',
-                                                  border: OutlineInputBorder()
-                                              ),
-                                              maxLines: 1,
-                                              controller: controllerHighlight,
+                                            style: TextStyle(
+                                                fontFamily:language == 'English' ? 'RobotoMono' : "Noto Sans JP"
+                                            ),
+                                            decoration: InputDecoration(
+                                                labelText: language == 'English' ? '[Optional] Specify an answer from the text.' : '[任意] 解答を指定する。',
+                                                border: OutlineInputBorder()
+                                            ),
+                                            maxLines: 1,
+                                            controller: controllerHighlight,
                                             ),
                                           ),
                                           SizedBox(width: 20),
@@ -282,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 RichText(
                                                     textAlign: TextAlign.center,
                                                     text: new TextSpan(
-                                                      text: 'Answer Type',
+                                                      text: language == 'English' ? 'Answer Type' : '解答抽出モデル',
                                                       style: new TextStyle(
                                                           fontSize: 12.0,
                                                           fontWeight: FontWeight.w400,
@@ -393,7 +399,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             SizedBox(width: 30),
                             Expanded(child:
                             SingleChildScrollView(child:Container(
-                              child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(),
+                              child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(language),
                             ),)
                             ),
                             SizedBox(width: 20)
@@ -486,18 +492,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Container initialReturnView() {return Container();}
 
-  FutureBuilder<Album> buildFutureBuilder() {
+  FutureBuilder<Album> buildFutureBuilder(String language) {
     return FutureBuilder<Album>(
       future: _futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.waiting && !snapshot.hasError) {
           return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children:[
-                // have to make it copy-able
-                Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -509,7 +509,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.lightBlue[900],
-                                fontFamily: 'Roboto'
+                                fontFamily: language == 'English' ? 'Roboto' : "Noto Sans JP"
                             ),
                             children: <TextSpan>[
                               new TextSpan(text: i[0].toString()),
@@ -521,22 +521,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     fontStyle: FontStyle.italic,
-                                    fontFamily: 'Roboto'
+                                    fontFamily: language == 'English' ? 'Roboto' : "Noto Sans JP"
                                 ),
                               ),
                               new TextSpan(text: '\n'),
                             ]
                         )
                     )
-                ],
-          ),
-                // ElevatedButton(
-                // child: Text("Copy Text")
-                // onPressed: (){
-                //   final data = ClipboardData(text: 'text');
-                //   Clipboard.setData(data);
-                // })
-              ]);
+                ]
+          );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }

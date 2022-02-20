@@ -91,6 +91,9 @@ flutter:
       fonts:
         - asset: fonts/RobotoMono/RobotoMono-Italic-VariableFont_wght.ttf
         - asset: fonts/RobotoMono/RobotoMono-VariableFont_wght.ttf
+    - family: Noto Sans JP
+      fonts:
+        - asset: fonts/Noto_Sans_JP/NotoSansJP-Regular.otf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
