@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+
 
 const API_URL = 'https://lm-question-generation-ijnzg4eymq-uc.a.run.app/question_generation';
 const API_URL_JA = 'https://lm-question-generation-ja-ijnzg4eymq-uc.a.run.app/question_generation';
@@ -494,43 +494,48 @@ class _MyHomePageState extends State<MyHomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              children: [
-                // SizedBox(height: 30),
+              children:[
+                // have to make it copy-able
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for ( var i in snapshot.data!.qa)
-                      new SelectableText.rich(
-                          new TextSpan(
-                              style: new TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.lightBlue[900],
-                                  fontFamily: 'Roboto'
-                              ),
-                              children: <TextSpan>[
-                                new TextSpan(text: i[0].toString()),
-                                new TextSpan(text: '\n'),
-                                new TextSpan(
-                                  text: i[1].toString(),
-                                  style: new TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontStyle: FontStyle.italic,
-                                      fontFamily: 'Roboto'
-                                  ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for ( var i in snapshot.data!.qa)
+                    new SelectableText.rich(
+                        new TextSpan(
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.lightBlue[900],
+                                fontFamily: 'Roboto'
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(text: i[0].toString()),
+                              new TextSpan(text: '\n'),
+                              new TextSpan(
+                                text: i[1].toString(),
+                                style: new TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: 'Roboto'
                                 ),
-                                new TextSpan(text: '\n'),
-                              ]
-                          )
-                      )
-                  ],
-                ),
-              ]
-          );
+                              ),
+                              new TextSpan(text: '\n'),
+                            ]
+                        )
+                    )
+                ],
+          ),
+                // ElevatedButton(
+                // child: Text("Copy Text")
+                // onPressed: (){
+                //   final data = ClipboardData(text: 'text');
+                //   Clipboard.setData(data);
+                // })
+              ]);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
