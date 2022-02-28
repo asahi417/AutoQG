@@ -101,8 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   Future<Album>? _futureAlbum;
   double numQuestions = 5;
-  String answerModel = 'keyword';
-  var items =  ['keyword', 'span'];
+  String answerModel = 'span';
+  var items =  ['span', 'keyword'];
   String language = 'English';
   var itemsLanguage =  ['English', 'Japanese'];
 
