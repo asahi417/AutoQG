@@ -128,6 +128,19 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
+  var warningMessage = new RichText(
+    textAlign: TextAlign.center,
+    text: new TextSpan(
+      style: new TextStyle(
+        fontSize: 15.0,
+        fontWeight: FontWeight.w900,
+        color: Colors.red,
+        fontFamily: 'Raleway',
+      ),
+      text: "WARNING: RUNNING WITH LIMITED RESOURCE NOW, SO IT GETS TO BE VERY SLOW OR UNREACHABLE!",
+    ),
+  );
+
   var conceptHeader = new RichText(
     textAlign: TextAlign.center,
     text: new TextSpan(
@@ -238,6 +251,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       SizedBox(height: 10),
                       subTitle,
+                      SizedBox(height: 20),
+                      warningMessage,
                       SizedBox(height: 20),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 450.0),
