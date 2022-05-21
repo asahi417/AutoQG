@@ -152,11 +152,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String language = 'English';
   var answerModel = {
     "English": "T5 SMALL",
-    "Japanese": "mT5 SMALL"
+    "Japanese": "mT5 SMALL (JA)"
   };
   var qgModel = {
     "English": "T5 BASE",
-    "Japanese": "mT5 BASE"
+    "Japanese": "mT5 BASE (JA)"
   };
 
   var subTitle = new RichText(
