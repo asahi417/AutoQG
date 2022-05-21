@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html' as html; // or package:universal_html/prefer_universal/html.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-const API_URL = 'https://lmqg-app-ijnzg4eymq-uc.a.run.app/question_generation';
+const API_URL = 'https://lmqg-api-ijnzg4eymq-uc.a.run.app/question_generation';
 const sampleFileDict = {
   "English": 'assets/squad_test_sample.txt',
   "Japanese": 'assets/squad_test_sample_ja.txt'
