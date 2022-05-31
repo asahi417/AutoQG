@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
   };
   var qgModel = {
     "English": "T5 BASE",
-    "Japanese": "mT5 BASE (JA)"
+    "Japanese": "mT5 SMALL (JA)"
   };
 
   var subTitle = new RichText(
