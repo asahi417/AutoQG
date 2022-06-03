@@ -18,7 +18,7 @@ const itemsAnswerModel = {
 };
 const itemsQgModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
-  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)']
+  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)']
 };
 const fontDict = {
   "English": 'RobotoMono',
