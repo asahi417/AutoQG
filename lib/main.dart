@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Japanese": "mT5 SMALL (JA)"
   };
   var qgModel = {
-    "English": "T5 BASE",
+    "English": "T5 SMALL",
     "Japanese": "mT5 SMALL (JA)"
   };
 
@@ -317,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
                 icon: const Icon(Icons.tag_faces_rounded),
                 // icon: Image.asset('assets/a.png'),
-                tooltip: "Jump to developer's page",
+                tooltip: "About Developer",
                 onPressed: _launchHP),
             IconButton(
                 icon: const Icon(Icons.email),
@@ -485,7 +485,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         min: 0.1,
                                                         max: 1,
                                                         divisions: 18,
-                                                        label: "Top P Value (set small for less noisy generation): ${double.parse((topP).toStringAsFixed(2))}",
+                                                        label: "Top P Value (decrease to get less noisy but less diverse generation): ${double.parse((topP).toStringAsFixed(2))}",
                                                         onChanged: (double value) {
                                                           setState(() {topP = value;});
                                                         }),
