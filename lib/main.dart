@@ -132,7 +132,8 @@ Future<Album> createAlbum(
     // then parse the JSON.
     return Album.fromJson(jsonDecode(
         // language == 'English' ? response.body : utf8.decode(response.bodyBytes)
-        language == 'Japanese' ? utf8.decode(response.bodyBytes) : response.body
+        // language == 'Japanese' ? utf8.decode(response.bodyBytes) : response.body
+        utf8.decode(response.bodyBytes)
     )
     );
   } else {
@@ -263,8 +264,8 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
       style: new TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.w900,
+        fontSize: 17.0,
+        fontWeight: FontWeight.w500,
         color: Colors.black54,
         fontFamily: 'RobotoMono',
       ),
@@ -299,13 +300,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         new TextSpan(text: 'into the text box, click'),
         new TextSpan(
-          text: ' `Run`!',
+          text: ' `Run`.',
           style: new TextStyle(
               fontWeight: FontWeight.w800,
               fontStyle: FontStyle.italic,
               color: Colors.pink[800]
           ),
-        )
+        ),
+        new TextSpan(text: '\nFirst try may take longer for model loading, so be patient!'),
       ],
     ),
   );
