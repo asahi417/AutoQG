@@ -9,40 +9,93 @@ import 'package:url_launcher/url_launcher.dart';
 const API_URL = 'https://lmqg-api-ijnzg4eymq-uc.a.run.app/question_generation';
 const sampleFileDict = {
   "English": 'assets/squad_test_sample.txt',
-  "Japanese": 'assets/squad_test_sample_ja.txt'
+  "Japanese": 'assets/squad_test_sample_ja.txt',
+  "German": 'assets/squad_test_sample_de.txt',
+  "Spanish": 'assets/squad_test_sample_es.txt',
+  "Italian": 'assets/squad_test_sample_it.txt',
+  "Korean": 'assets/squad_test_sample_ko.txt',
+  "Russian": 'assets/squad_test_sample_ru.txt'
 };
-const itemsLanguage = ['English', 'Japanese'];
+const itemsLanguage = [
+  'English',
+  'Japanese',
+  'German',
+  'Spanish',
+  'Italian',
+  'Korean',
+  'Russian'
+];
 const itemsAnswerModel = {
   "English": ['Keyword', 'T5 SMALL', 'T5 BASE'],
-  "Japanese": ['Keyword', 'mT5 SMALL (JA)']
+  "Japanese": ['Keyword', 'mT5 SMALL (JA)'],
+  "German": ['Keyword', 'mT5 SMALL (DE)'],
+  "Spanish": ['Keyword', 'mT5 SMALL (ES)'],
+  "Italian": ['Keyword', 'mT5 SMALL (IT)'],
+  "Korean": ['Keyword', 'mT5 SMALL (KO)'],
+  "Russian": ['Keyword', 'mT5 SMALL (RU)']
 };
 const itemsQgModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
-  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)']
+  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
+  "German": ['mT5 SMALL (DE)'],
+  "Spanish": ['mT5 SMALL (ES)'],
+  "Italian": ['mT5 SMALL (IT)'],
+  "Korean": ['mT5 SMALL (KO)'],
+  "Russian": ['mT5 SMALL (RU)']
 };
 const fontDict = {
   "English": 'RobotoMono',
-  "Japanese": "Noto Sans JP"
+  "Japanese": "Noto Sans JP",
+  "German": 'RobotoMono',
+  "Spanish": 'RobotoMono',
+  "Italian": 'RobotoMono',
+  "Korean": 'RobotoMono',
+  "Russian": 'RobotoMono'
 };
 const sentenceTextBoxError = {
   "English": 'Please enter some text',
-  "Japanese": '文章を入力してください。'
+  "Japanese": '文章を入力してください。',
+  "German": 'Bitte geben Sie einen Text ein',
+  "Spanish": 'Por favor, introduzca un texto',
+  "Italian": 'Per favore, inserisci del testo',
+  "Korean": '텍스트를 입력하세요',
+  "Russian": 'Пожалуйста, введите текст'
 };
 const sentenceTextBox = {
   "English": "Enter text or press `Example` below to try sample documents.",
-  "Japanese": '文章を入力もしくは`Example`をクリック。'
+  "Japanese": '文章を入力もしくは`Example`をクリック。',
+  "German": 'Geben Sie Text ein oder klicken Sie unten auf `Example`, um Beispieldokumente auszuprobieren.',
+  "Spanish": 'Ingrese texto o presione `Example` a continuación para probar documentos de muestra.',
+  "Italian": 'Immettere il testo o premere `Example` di seguito per provare documenti di esempio.',
+  "Korean": '텍스트를 입력하거나 아래의 `Example`를 눌러 샘플 문서를 사용해 보세요.',
+  "Russian": 'Введите текст или нажмите `Example` ниже, чтобы попробовать образцы документов.'
 };
 const sentenceTextBoxHighlight = {
   "English": '[Optional] Specify an answer from the text.',
-  "Japanese": '[任意] 解答を指定する。'
+  "Japanese": '[任意] 解答を指定する。',
+  "German": '[Optional] Geben Sie eine Antwort aus dem Text an.',
+  "Spanish": '[Opcional] Especifique una respuesta del texto.',
+  "Italian": '[Facoltativo] Specificare una risposta dal testo.',
+  "Korean": '[선택 사항] 텍스트에서 답변을 지정합니다.',
+  "Russian": '[Необязательно] Укажите ответ из текста.'
 };
 const sentenceQGModel = {
   "English": 'Question Model',
-  "Japanese": '質問生成モデル'
+  "Japanese": '質問生成モデル',
+  "German": 'Fragenmodell',
+  "Spanish": 'Modelo de pregunta',
+  "Italian": 'Modello di domanda',
+  "Korean": '질문 모델',
+  "Russian": 'Модель вопроса'
 };
 const sentenceAnswerModel = {
   "English": 'Answer Model',
-  "Japanese": '解答抽出モデル'
+  "Japanese": '解答抽出モデル',
+  "German": 'Antwortmodell',
+  "Spanish": 'Modelo de respuesta',
+  "Italian": 'Modello di risposta',
+  "Korean": '답변 모델',
+  "Russian": 'Модель ответа'
 };
 
 Future<String> loadAsset(String sampleFile) async {
@@ -78,7 +131,9 @@ Future<Album> createAlbum(
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
     return Album.fromJson(jsonDecode(
-        language == 'English' ? response.body : utf8.decode(response.bodyBytes))
+        // language == 'English' ? response.body : utf8.decode(response.bodyBytes)
+        language == 'Japanese' ? utf8.decode(response.bodyBytes) : response.body
+    )
     );
   } else {
     // If the server did not return a 201 CREATED response,
@@ -128,7 +183,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AutoQG: Automatic question generation powered by AI', // shown on the tab
+      title: 'AutoQG: Multilingual automatic question & answer generation powered by AI', // shown on the tab
       theme: ThemeData(fontFamily: 'RobotoMono', backgroundColor: Color(0xFFFFFFF6),
           scaffoldBackgroundColor: const Color(0xFFFFFFF6)
       ),
@@ -152,17 +207,27 @@ class _MyHomePageState extends State<MyHomePage> {
   String language = 'English';
   var answerModel = {
     "English": "T5 SMALL",
-    "Japanese": "mT5 SMALL (JA)"
+    "Japanese": "mT5 SMALL (JA)",
+    "German": "mT5 SMALL (DE)",
+    "Spanish": "mT5 SMALL (ES)",
+    "Italian": "mT5 SMALL (IT)",
+    "Korean": "mT5 SMALL (KO)",
+    "Russian": "mT5 SMALL (RU)",
   };
   var qgModel = {
     "English": "T5 SMALL",
-    "Japanese": "mT5 SMALL (JA)"
+    "Japanese": "mT5 SMALL (JA)",
+    "German": "mT5 SMALL (DE)",
+    "Spanish": "mT5 SMALL (ES)",
+    "Italian": "mT5 SMALL (IT)",
+    "Korean": "mT5 SMALL (KO)",
+    "Russian": "mT5 SMALL (RU)",
   };
 
   var subTitle = new RichText(
     text: new TextSpan(
       style: new TextStyle(
-        fontSize: 30.0,
+        fontSize: 35.0,
         fontWeight: FontWeight.w100,
         color: Colors.black,
         fontFamily: 'RobotoMono',
@@ -204,6 +269,16 @@ class _MyHomePageState extends State<MyHomePage> {
         fontFamily: 'RobotoMono',
       ),
       children: <TextSpan>[
+        new TextSpan(text: 'Language model based'),
+        new TextSpan(
+            text: ' multilingual ',
+            style: new TextStyle(
+                fontWeight: FontWeight.w800,
+                fontStyle: FontStyle.italic,
+                color: Colors.pink[800]
+            )
+        ),
+        new TextSpan(text: 'question and answer generation. \n'),
         new TextSpan(text: 'Select'),
         new TextSpan(
             text: ' language ',
@@ -284,7 +359,12 @@ class _MyHomePageState extends State<MyHomePage> {
   // load sample from SQuAD test split
   var sampleListDict = {
     "English": [],
-    "Japanese": []
+    "Japanese": [],
+    "German": [],
+    "Spanish": [],
+    "Italian": [],
+    "Korean": [],
+    "Russian": []
   };
   _MyHomePageState() {
     loadAsset(sampleFileDict['English']!).then((val) => setState(() {
@@ -292,6 +372,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }));
     loadAsset(sampleFileDict['Japanese']!).then((val) => setState(() {
       sampleListDict['Japanese'] = val.split("\n");
+    }));
+    loadAsset(sampleFileDict['German']!).then((val) => setState(() {
+      sampleListDict['German'] = val.split("\n");
+    }));
+    loadAsset(sampleFileDict['Spanish']!).then((val) => setState(() {
+      sampleListDict['Spanish'] = val.split("\n");
+    }));
+    loadAsset(sampleFileDict['Italian']!).then((val) => setState(() {
+      sampleListDict['Italian'] = val.split("\n");
+    }));
+    loadAsset(sampleFileDict['Korean']!).then((val) => setState(() {
+      sampleListDict['Korean'] = val.split("\n");
+    }));
+    loadAsset(sampleFileDict['Russian']!).then((val) => setState(() {
+      sampleListDict['Russian'] = val.split("\n");
     }));
   }
 
@@ -353,7 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       SizedBox(height: 10),
                       subTitle,
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       description,
                       SizedBox(height: 20),
                       ConstrainedBox(

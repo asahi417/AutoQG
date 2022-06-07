@@ -1,1 +1,2 @@
-2022/05/21-12:12:04.332 10303 Error recovering version set with 0 records: Corruption: no meta-nextfile entry in descriptor
+2022/06/05-14:39:42.889 12c03 Creating DB /private/var/folders/0y/5lhs2g693qv17hpsy80z20vw0000gn/T/flutter_tools.CD7ge1/flutter_tools_chrome_device.qmXyNh/Default/shared_proto_db since it was missing.
+2022/06/05-14:39:42.948 12c03 Reusing MANIFEST /private/var/folders/0y/5lhs2g693qv17hpsy80z20vw0000gn/T/flutter_tools.CD7ge1/flutter_tools_chrome_device.qmXyNh/Default/shared_proto_db/MANIFEST-000001
