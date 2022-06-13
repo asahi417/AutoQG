@@ -14,7 +14,8 @@ const sampleFileDict = {
   "Spanish": 'assets/squad_test_sample_es.txt',
   "Italian": 'assets/squad_test_sample_it.txt',
   "Korean": 'assets/squad_test_sample_ko.txt',
-  "Russian": 'assets/squad_test_sample_ru.txt'
+  "Russian": 'assets/squad_test_sample_ru.txt',
+  "French": 'assets/squad_test_sample_fr.txt'
 };
 const itemsLanguage = [
   'English',
@@ -23,7 +24,8 @@ const itemsLanguage = [
   'Spanish',
   'Italian',
   'Korean',
-  'Russian'
+  'Russian',
+  'French'
 ];
 const itemsAnswerModel = {
   "English": ['Keyword', 'T5 SMALL', 'T5 BASE'],
@@ -32,7 +34,8 @@ const itemsAnswerModel = {
   "Spanish": ['Keyword', 'mT5 SMALL (ES)'],
   "Italian": ['Keyword', 'mT5 SMALL (IT)'],
   "Korean": ['Keyword', 'mT5 SMALL (KO)'],
-  "Russian": ['Keyword', 'mT5 SMALL (RU)']
+  "Russian": ['Keyword', 'mT5 SMALL (RU)'],
+  'French': ['Keyword', 'mT5 SMALL (FR)'],
 };
 const itemsQgModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
@@ -41,7 +44,8 @@ const itemsQgModelDict = {
   "Spanish": ['mT5 SMALL (ES)'],
   "Italian": ['mT5 SMALL (IT)'],
   "Korean": ['mT5 SMALL (KO)'],
-  "Russian": ['mT5 SMALL (RU)']
+  "Russian": ['mT5 SMALL (RU)'],
+  'French': ['mT5 SMALL (FR)'],
 };
 const fontDict = {
   "English": 'RobotoMono',
@@ -50,7 +54,8 @@ const fontDict = {
   "Spanish": 'RobotoMono',
   "Italian": 'RobotoMono',
   "Korean": 'RobotoMono',
-  "Russian": 'RobotoMono'
+  "Russian": 'RobotoMono',
+  'French': 'RobotoMono',
 };
 const sentenceTextBoxError = {
   "English": 'Please enter some text',
@@ -59,7 +64,8 @@ const sentenceTextBoxError = {
   "Spanish": 'Por favor, introduzca un texto',
   "Italian": 'Per favore, inserisci del testo',
   "Korean": '텍스트를 입력하세요',
-  "Russian": 'Пожалуйста, введите текст'
+  "Russian": 'Пожалуйста, введите текст',
+  'French': 'Veuillez saisir du texte',
 };
 const sentenceTextBox = {
   "English": "Enter text or press `Example` below to try sample documents.",
@@ -68,7 +74,8 @@ const sentenceTextBox = {
   "Spanish": 'Ingrese texto o presione `Example` a continuación para probar documentos de muestra.',
   "Italian": 'Immettere il testo o premere `Example` di seguito per provare documenti di esempio.',
   "Korean": '텍스트를 입력하거나 아래의 `Example`를 눌러 샘플 문서를 사용해 보세요.',
-  "Russian": 'Введите текст или нажмите `Example` ниже, чтобы попробовать образцы документов.'
+  "Russian": 'Введите текст или нажмите `Example` ниже, чтобы попробовать образцы документов.',
+  'French': 'Saisissez du texte ou appuyez sur "Exemple" ci-dessous pour essayer des exemples de documents.',
 };
 const sentenceTextBoxHighlight = {
   "English": '[Optional] Specify an answer from the text.',
@@ -77,7 +84,8 @@ const sentenceTextBoxHighlight = {
   "Spanish": '[Opcional] Especifique una respuesta del texto.',
   "Italian": '[Facoltativo] Specificare una risposta dal testo.',
   "Korean": '[선택 사항] 텍스트에서 답변을 지정합니다.',
-  "Russian": '[Необязательно] Укажите ответ из текста.'
+  "Russian": '[Необязательно] Укажите ответ из текста.',
+  'French': '[Facultatif] Spécifiez une réponse à partir du texte.',
 };
 const sentenceQGModel = {
   "English": 'Question Model',
@@ -86,7 +94,8 @@ const sentenceQGModel = {
   "Spanish": 'Modelo de pregunta',
   "Italian": 'Modello di domanda',
   "Korean": '질문 모델',
-  "Russian": 'Модель вопроса'
+  "Russian": 'Модель вопроса',
+  'French': 'Modèle de questions',
 };
 const sentenceAnswerModel = {
   "English": 'Answer Model',
@@ -95,7 +104,8 @@ const sentenceAnswerModel = {
   "Spanish": 'Modelo de respuesta',
   "Italian": 'Modello di risposta',
   "Korean": '답변 모델',
-  "Russian": 'Модель ответа'
+  "Russian": 'Модель ответа',
+  'French': 'Modèle de réponse',
 };
 
 Future<String> loadAsset(String sampleFile) async {
@@ -131,8 +141,6 @@ Future<Album> createAlbum(
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
     return Album.fromJson(jsonDecode(
-        // language == 'English' ? response.body : utf8.decode(response.bodyBytes)
-        // language == 'Japanese' ? utf8.decode(response.bodyBytes) : response.body
         utf8.decode(response.bodyBytes)
     )
     );
@@ -214,6 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Italian": "mT5 SMALL (IT)",
     "Korean": "mT5 SMALL (KO)",
     "Russian": "mT5 SMALL (RU)",
+    'French': "mT5 SMALL (FR)"
   };
   var qgModel = {
     "English": "T5 SMALL",
@@ -223,6 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Italian": "mT5 SMALL (IT)",
     "Korean": "mT5 SMALL (KO)",
     "Russian": "mT5 SMALL (RU)",
+    'French': "mT5 SMALL (FR)"
   };
 
   var subTitle = new RichText(
@@ -366,7 +376,8 @@ class _MyHomePageState extends State<MyHomePage> {
     "Spanish": [],
     "Italian": [],
     "Korean": [],
-    "Russian": []
+    "Russian": [],
+    "French": []
   };
   _MyHomePageState() {
     loadAsset(sampleFileDict['English']!).then((val) => setState(() {
@@ -390,6 +401,10 @@ class _MyHomePageState extends State<MyHomePage> {
     loadAsset(sampleFileDict['Russian']!).then((val) => setState(() {
       sampleListDict['Russian'] = val.split("\n");
     }));
+    loadAsset(sampleFileDict['French']!).then((val) => setState(() {
+      sampleListDict['French'] = val.split("\n");
+    }));
+
   }
 
 
