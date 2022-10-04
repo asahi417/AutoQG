@@ -28,7 +28,7 @@ const itemsLanguage = [
   'French'
 ];
 const itemsAnswerModel = {
-  "English": ['Keyword', 'T5 SMALL', 'T5 BASE'],
+  "English": ['Keyword', 'T5 SMALL', 'T5 BASE', 'T5 LARGE'],
   "Japanese": ['Keyword', 'mT5 SMALL (JA)'],
   "German": ['Keyword', 'mT5 SMALL (DE)'],
   "Spanish": ['Keyword', 'mT5 SMALL (ES)'],
