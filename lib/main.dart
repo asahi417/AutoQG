@@ -170,7 +170,14 @@ _launchEmail() async {
     throw 'Could not launch $url';
   }
 }
-
+_launchPaper() async {
+  const url = 'https://arxiv.org/abs/2210.03992';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 _launchHP() async {
   const url = 'https://asahiushio.com';
   if (await canLaunch(url)) {
@@ -431,6 +438,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 // icon: Image.asset('assets/a.png'),
                 tooltip: "About Developer",
                 onPressed: _launchHP),
+            IconButton(
+                icon: const Icon(Icons.article),
+                tooltip: "Read Article",
+                onPressed: _launchPaper),
+            IconButton(
+                icon: const Icon(Icons.computer),
+                tooltip: "LMQG: Python Library for QG",
+                onPressed: _launchPaper),
             IconButton(
                 icon: const Icon(Icons.email),
                 tooltip: 'Contact',
