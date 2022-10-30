@@ -178,6 +178,14 @@ _launchPaper() async {
     throw 'Could not launch $url';
   }
 }
+_launchGithub() async {
+  const url = 'https://github.com/asahi417/lm-question-generation';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 _launchHP() async {
   const url = 'https://asahiushio.com';
   if (await canLaunch(url)) {
@@ -445,7 +453,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
                 icon: const Icon(Icons.computer),
                 tooltip: "LMQG: Python Library for QG",
-                onPressed: _launchPaper),
+                onPressed: _launchGithub),
             IconButton(
                 icon: const Icon(Icons.email),
                 tooltip: 'Contact',
