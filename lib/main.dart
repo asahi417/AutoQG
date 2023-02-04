@@ -27,25 +27,25 @@ const itemsLanguage = [
   'Russian',
   'French'
 ];
-const itemsAnswerModel = {
-  "English": ['Keyword', 'T5 SMALL', 'T5 BASE', 'T5 LARGE'],
-  "Japanese": ['Keyword', 'mT5 SMALL (JA)'],
-  "German": ['Keyword', 'mT5 SMALL (DE)'],
-  "Spanish": ['Keyword', 'mT5 SMALL (ES)'],
-  "Italian": ['Keyword', 'mT5 SMALL (IT)'],
-  "Korean": ['Keyword', 'mT5 SMALL (KO)'],
-  "Russian": ['Keyword', 'mT5 SMALL (RU)'],
-  'French': ['Keyword', 'mT5 SMALL (FR)'],
+const itemsQAGTypeDict = {
+  "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "German": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Spanish": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Italian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Korean": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Russian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "French": ['Default', 'End2End', 'Pipeline', 'Multitask']
 };
-const itemsQgModelDict = {
-  "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
-  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
-  "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
-  "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
-  "Italian": ['mT5 SMALL (IT)', 'mT5 BASE (IT)', 'mBART LARGE (IT)'],
-  "Korean": ['mT5 SMALL (KO)', 'mT5 BASE (KO)', 'mBART LARGE (KO)'],
-  "Russian": ['mT5 SMALL (RU)', 'mT5 BASE (RU)', 'mBART LARGE (RU)'],
-  'French': ['mT5 SMALL (FR)', 'mT5 BASE (FR)', 'mBART LARGE (FR)'],
+const itemsQAGModelDict = {
+  "English": ['Default', 'T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
+  "Japanese": ['Default', 'mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
+  "German": ['Default', 'mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
+  "Spanish": ['Default', 'mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
+  "Italian": ['Default', 'mT5 SMALL (IT)', 'mT5 BASE (IT)', 'mBART LARGE (IT)'],
+  "Korean": ['Default', 'mT5 SMALL (KO)', 'mT5 BASE (KO)', 'mBART LARGE (KO)'],
+  "Russian": ['Default', 'mT5 SMALL (RU)', 'mT5 BASE (RU)', 'mBART LARGE (RU)'],
+  'French': ['Default', 'mT5 SMALL (FR)', 'mT5 BASE (FR)', 'mBART LARGE (FR)']
 };
 const fontDict = {
   "English": 'RobotoMono',
@@ -87,25 +87,25 @@ const sentenceTextBoxHighlight = {
   "Russian": '[Необязательно] Укажите ответ из текста.',
   'French': '[Facultatif] Spécifiez une réponse à partir du texte.',
 };
-const sentenceQGModel = {
-  "English": 'Question Model',
-  "Japanese": '質問生成モデル',
-  "German": 'Fragenmodell',
-  "Spanish": 'Modelo de pregunta',
-  "Italian": 'Modello di domanda',
-  "Korean": '질문 모델',
-  "Russian": 'Модель вопроса',
-  'French': 'Modèle de questions',
+const subTitleQAGModel = {
+  "English": 'Generative Model',
+  "Japanese": '生成モデル',
+  "German": 'Generatives Modell',
+  "Spanish": 'modelo generativo',
+  "Italian": 'Modello generativo',
+  "Korean": '생성 모델',
+  "Russian": 'Генеративная модель',
+  'French': 'Modèle Génératif',
 };
-const sentenceAnswerModel = {
-  "English": 'Answer Model',
-  "Japanese": '解答抽出モデル',
-  "German": 'Antwortmodell',
-  "Spanish": 'Modelo de respuesta',
-  "Italian": 'Modello di risposta',
-  "Korean": '답변 모델',
-  "Russian": 'Модель ответа',
-  'French': 'Modèle de réponse',
+const subTitleQAGType = {
+  "English": 'Generation Type',
+  "Japanese": '生成タイプ',
+  "German": 'Generationstyp',
+  "Spanish": 'Tipo de generación',
+  "Italian": 'Tipo di generazione',
+  "Korean": '세대 유형',
+  "Russian": 'Тип генерации',
+  'French': 'Type de génération',
 };
 
 Future<String> loadAsset(String sampleFile) async {
@@ -115,8 +115,8 @@ Future<String> loadAsset(String sampleFile) async {
 Future<Album> createAlbum(
     String inputText,
     String language,
-    String answerModel,
-    String qgModel,
+    String qagType,
+    String qagModel,
     String highlight,
     int numBeams,
     double topP,
@@ -127,8 +127,8 @@ Future<Album> createAlbum(
     body: jsonEncode({
       'input_text': inputText,
       'language': language,
-      'answer_model': answerModel,
-      'qg_model': qgModel,
+      'qag_type': qagType,
+      'model': qagModel,
       'highlight': highlight,
       'num_beams': numBeams,
       'use_gpu': false,
@@ -171,7 +171,7 @@ _launchEmail() async {
   }
 }
 _launchPaper() async {
-  const url = 'https://arxiv.org/abs/2210.03992';
+  const url = 'https://aclanthology.org/2022.emnlp-main.42/';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -229,25 +229,25 @@ class _MyHomePageState extends State<MyHomePage> {
   double numBeams = 4;
   double topP = 0.9;
   String language = 'English';
-  var answerModel = {
-    "English": "T5 SMALL",
-    "Japanese": "mT5 SMALL (JA)",
-    "German": "mT5 SMALL (DE)",
-    "Spanish": "mT5 SMALL (ES)",
-    "Italian": "mT5 SMALL (IT)",
-    "Korean": "mT5 SMALL (KO)",
-    "Russian": "mT5 SMALL (RU)",
-    'French': "mT5 SMALL (FR)"
+  var qagType = {
+    "English": "Default",
+    "Japanese": "Default",
+    "German": "Default",
+    "Spanish": "Default",
+    "Italian": "Default",
+    "Korean": "Default",
+    "Russian": "Default",
+    'French': "Default"
   };
-  var qgModel = {
-    "English": "T5 SMALL",
-    "Japanese": "mT5 SMALL (JA)",
-    "German": "mT5 SMALL (DE)",
-    "Spanish": "mT5 SMALL (ES)",
-    "Italian": "mT5 SMALL (IT)",
-    "Korean": "mT5 SMALL (KO)",
-    "Russian": "mT5 SMALL (RU)",
-    'French': "mT5 SMALL (FR)"
+  var qagModel = {
+    "English": "Default",
+    "Japanese": "Default",
+    "German": "Default",
+    "Spanish": "Default",
+    "Italian": "Default",
+    "Korean": "Default",
+    "Russian": "Default",
+    'French': "Default"
   };
 
   var subTitle = new RichText(
@@ -295,16 +295,15 @@ class _MyHomePageState extends State<MyHomePage> {
         fontFamily: 'RobotoMono',
       ),
       children: <TextSpan>[
-        new TextSpan(text: 'Language model based'),
         new TextSpan(
-            text: ' multilingual ',
+            text: 'Multilingual ',
             style: new TextStyle(
                 fontWeight: FontWeight.w800,
                 fontStyle: FontStyle.italic,
                 color: Colors.pink[800]
             )
         ),
-        new TextSpan(text: 'question and answer generation. \n'),
+        new TextSpan(text: 'question and answer generation service. \n'),
         new TextSpan(text: 'Select'),
         new TextSpan(
             text: ' language ',
@@ -540,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 RichText(
                                                   textAlign: TextAlign.center,
                                                   text: new TextSpan(
-                                                    text: sentenceQGModel[language],
+                                                    text: subTitleQAGModel[language],
                                                     style: new TextStyle(
                                                         fontSize: 12.0,
                                                         fontWeight: FontWeight.w400,
@@ -550,13 +549,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   ),
                                                 ),
                                                 DropdownButton(
-                                                  value: qgModel[language],
+                                                  value: qagModel[language],
                                                   icon: Icon(Icons.keyboard_arrow_down),
-                                                  items: itemsQgModelDict[language]!.map((String items) {
+                                                  items: itemsQAGModelDict[language]!.map((String items) {
                                                     return DropdownMenuItem(value: items, child: Text(items));
                                                   }).toList(),
                                                   onChanged: (String? newValue){
-                                                    setState(() {qgModel[language] = newValue!;});
+                                                    setState(() {qagModel[language] = newValue!;});
                                                   },
                                                 ),
                                               ]
@@ -569,7 +568,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 RichText(
                                                     textAlign: TextAlign.center,
                                                     text: new TextSpan(
-                                                      text: sentenceAnswerModel[language],
+                                                      text: subTitleQAGType[language],
                                                       style: new TextStyle(
                                                           fontSize: 12.0,
                                                           fontWeight: FontWeight.w400,
@@ -579,13 +578,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     ),
                                                 ),
                                                 DropdownButton(
-                                                  value: answerModel[language],
+                                                  value: qagType[language],
                                                   icon: Icon(Icons.keyboard_arrow_down),
-                                                  items: itemsAnswerModel[language]!.map((String items) {
+                                                  items: itemsQAGTypeDict[language]!.map((String items) {
                                                     return DropdownMenuItem(value: items, child: Text(items));
                                                   }).toList(),
                                                   onChanged: (String? newValue){
-                                                    setState(() {answerModel[language] = newValue!;});
+                                                    setState(() {qagType[language] = newValue!;});
                                                   },
                                                 ),
                                               ]
@@ -671,8 +670,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         _futureAlbum = createAlbum(
                                                             controllerContext.text,
                                                             language,
-                                                            answerModel[language]!,
-                                                            qgModel[language]!,
+                                                            qagType[language]!,
+                                                            qagModel[language]!,
                                                             controllerHighlight.text,
                                                             numBeams.round(),
                                                             topP
