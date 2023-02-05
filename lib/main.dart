@@ -226,8 +226,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var controllerHighlight = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   Future<Album>? _futureAlbum;
-  double numBeams = 4;
-  double topP = 0.9;
+  double numBeams = 5;
+  double topP = 0.95;
   String language = 'English';
   var qagType = {
     "English": "Default",
@@ -295,15 +295,6 @@ class _MyHomePageState extends State<MyHomePage> {
         fontFamily: 'RobotoMono',
       ),
       children: <TextSpan>[
-        new TextSpan(
-            text: 'Multilingual ',
-            style: new TextStyle(
-                fontWeight: FontWeight.w800,
-                fontStyle: FontStyle.italic,
-                color: Colors.pink[800]
-            )
-        ),
-        new TextSpan(text: 'question and answer generation service. \n'),
         new TextSpan(text: 'Select'),
         new TextSpan(
             text: ' language ',
@@ -349,16 +340,16 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-  var solutionHeaderTop = new RichText(
+  var resultHeader = new RichText(
     textAlign: TextAlign.center,
     text: new TextSpan(
         style: TextStyle(
-            fontSize: 20.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.w600,
             color: Colors.black45,
             fontFamily: "Hahmlet"
         ),
-        text: "SOLUTIONS"
+        text: "Generated QA Pairs"
     ),
   );
 
@@ -367,15 +358,16 @@ class _MyHomePageState extends State<MyHomePage> {
     text: new TextSpan(
         style: new TextStyle(
             fontSize: 20.0,
-            fontWeight: FontWeight.w300,
-            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            color: Colors.black45,
+            // color: Colors.white,
             fontFamily: "Raleway"),
         children: [
           new TextSpan(
             text: "If you have any questions or inquiries, send to us!",
-            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
+            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
           WidgetSpan(child: IconButton(
-            icon: const Icon(Icons.email_outlined, size: 20, color: Colors.white,),
+            icon: const Icon(Icons.email_outlined, size: 20, color: Colors.black45,),
             onPressed: _launchEmail,
             tooltip: 'Contact'))
         ]
@@ -427,8 +419,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     ScrollController _scrollController = ScrollController();
 
-    return Scaffold(
-        appBar: AppBar(
+    return SelectionArea(
+        child: Scaffold(
+          appBar: AppBar(
           actionsIconTheme: IconThemeData(
               size: 30.0,
               color: Colors.black,
@@ -476,7 +469,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           backgroundColor: Color(0xFFFFFFF6),
         ),
-        body: SingleChildScrollView(
+          body: SingleChildScrollView(
             controller: _scrollController,
             child:
             Form(
@@ -490,9 +483,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(height: 10),
                       description,
                       SizedBox(height: 20),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 550.0),
-                        child: Row(
+                      Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(width: 20),
@@ -695,17 +686,51 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ]
                                 )
                             ),
-                            SizedBox(width: 35),
+                            SizedBox(width: 20)
+                          ],
+                        ),
+                      SizedBox(height: 40),
+                      // Container(
+                      //     width: double.infinity,
+                      //     color: Color(0xFFFFFFF6),
+                      //     child: Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         children: [
+                      //           // SizedBox(height: 20,),
+                      //           resultHeader,
+                      //           SizedBox(height: 8,),
+                      //           Container(
+                      //               height: 3,
+                      //               width: 300,
+                      //               decoration: BoxDecoration(
+                      //                   color: Colors.black45,
+                      //                   border: Border.all(color: Colors.black45),
+                      //                   borderRadius: BorderRadius.all(Radius.circular(20))
+                      //               )
+                      //           ),
+                      //         ]
+                      //     )
+                      // ),
+                      // SizedBox(height: 30),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: 550.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(width: 20),
                             Expanded(child:
-                            SingleChildScrollView(child:Container(
-                              child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(language),
+                            SingleChildScrollView(
+                              child:Container(
+                                child: (_futureAlbum == null) ? initialReturnView() : buildFutureBuilder(language),
                             ),)
                             ),
                             SizedBox(width: 20)
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       Container(
                         width: double.infinity,
                         // width: 1500.0,
@@ -735,40 +760,41 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
+                      // Container(
+                      //     width: double.infinity,
+                      //     // width: 1500.0,
+                      //     color: Color(0xFFFFFFF6),
+                      //     child: Column(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         children: [
+                      //           SizedBox(height: 20,),
+                      //           resultHeader,
+                      //           SizedBox(height: 8,),
+                      //           Container(
+                      //               height: 3,
+                      //               width: 100,
+                      //               decoration: BoxDecoration(
+                      //                   color: Colors.black45,
+                      //                   border: Border.all(color: Colors.black45),
+                      //                   borderRadius: BorderRadius.all(Radius.circular(20))
+                      //               )
+                      //           ),
+                      //           Container(
+                      //             width: 500,
+                      //             height: 400,
+                      //             child: FittedBox(child: Image.asset('assets/solutions.png'),),
+                      //           ),
+                      //           SizedBox(height: 20),
+                      //         ]
+                      //     )
+                      // ),
                       Container(
                           width: double.infinity,
                           // width: 1500.0,
                           color: Color(0xFFFFFFF6),
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 20,),
-                                solutionHeaderTop,
-                                SizedBox(height: 8,),
-                                Container(
-                                    height: 3,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        color: Colors.black45,
-                                        border: Border.all(color: Colors.black45),
-                                        borderRadius: BorderRadius.all(Radius.circular(20))
-                                    )
-                                ),
-                                Container(
-                                  width: 500,
-                                  height: 400,
-                                  child: FittedBox(child: Image.asset('assets/solutions.png'),),
-                                ),
-                                SizedBox(height: 20),
-                              ]
-                          )
-                      ),
-                      Container(
-                          width: double.infinity,
-                          // width: 1500.0,
-                          color: Color(0xFF444729),
+                          // color: Color(0xFF444729),
                           child: Column(
                             // crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.start,
@@ -786,7 +812,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
             )
         )
-    );
+    ));
   }
 
   Container initialReturnView() {return Container();}
@@ -801,6 +827,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Container(
+                      width: double.infinity,
+                      color: Color(0xFFFFFFF6),
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // SizedBox(height: 20,),
+                            resultHeader,
+                            SizedBox(height: 8,),
+                            Container(
+                                height: 3,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                    color: Colors.black45,
+                                    border: Border.all(color: Colors.black45),
+                                    borderRadius: BorderRadius.all(Radius.circular(20))
+                                )
+                            ),
+                          ]
+                      )
+                  ),
+                  SizedBox(height: 30),
                   for ( var i in snapshot.data!.qa)
                     new SelectableText.rich(
                         new TextSpan(
@@ -811,14 +861,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontFamily: fontDict[language]
                             ),
                             children: <TextSpan>[
-                              new TextSpan(text: i['question'].toString()),
+                              new TextSpan(text: "Question: " + i['question'].toString()),
                               new TextSpan(text: '\n'),
                               new TextSpan(
-                                text: i['answer'].toString(),
+                                text: "Answer: " + i['answer'].toString(),
                                 style: new TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: fontDict[language]
+                                ),
+                              ),
+                              new TextSpan(text: '\n'),
+                              new TextSpan(
+                                text: 'Confidence: ' + i['score'].toStringAsFixed(2),
+                                style: new TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.teal,
                                     fontStyle: FontStyle.italic,
                                     fontFamily: fontDict[language]
                                 ),
