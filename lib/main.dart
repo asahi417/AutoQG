@@ -251,23 +251,24 @@ class _MyHomePageState extends State<MyHomePage> {
   };
 
   var subTitle = new RichText(
+    textAlign: TextAlign.center,
     text: new TextSpan(
       style: new TextStyle(
-        fontSize: 35.0,
-        fontWeight: FontWeight.w100,
+        fontSize: 25.0,
+        fontWeight: FontWeight.w900,
         color: Colors.black,
         fontFamily: 'RobotoMono',
       ),
       children: <TextSpan>[
-        new TextSpan(text: 'Automatic'),
+        // new TextSpan(text: 'Automatic'),
         new TextSpan(
-            text: ' Question & Answer ',
-            style: new TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.pink[800]
-            )
+            text: 'Write QA with AI',
+            // style: new TextStyle(
+            //     fontWeight: FontWeight.w900,
+            //     color: Colors.pink[800]
+            // )
         ),
-        new TextSpan(text: 'Generation'),
+        // new TextSpan(text: 'Generator'),
       ],
     ),
   );
@@ -289,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
       style: new TextStyle(
-        fontSize: 17.0,
+        fontSize: 15.0,
         fontWeight: FontWeight.w500,
         color: Colors.black54,
         fontFamily: 'RobotoMono',
@@ -304,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.pink[800]
             )
         ),
-        new TextSpan(text: 'from the tab on the right top,'),
+        new TextSpan(text: 'on the right top tab,'),
         new TextSpan(
             text: ' type ',
             style: new TextStyle(
@@ -313,16 +314,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.pink[800]
             ),
         ),
-        new TextSpan(text: 'into the text box, click'),
+        new TextSpan(text: 'into the text box, and click'),
         new TextSpan(
-          text: ' `Run`.',
+          text: ' Run ',
           style: new TextStyle(
               fontWeight: FontWeight.w800,
               fontStyle: FontStyle.italic,
               color: Colors.pink[800]
           ),
         ),
-        new TextSpan(text: '\nFirst try may take longer for model loading, so be patient!'),
+        new TextSpan(text: 'to get question & answer written by AI models.\n'),
+        new TextSpan(
+          text: '*First run may take longer for model loading.',
+          style: new TextStyle(
+              fontSize: 12.0,
+              // fontWeight: FontWeight.w800,
+              fontStyle: FontStyle.italic,
+              // color: Colors.pink[800]
+          ),
+        ),
       ],
     ),
   );
@@ -331,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
       style: new TextStyle(
-        fontSize: 25.0,
+        fontSize: 18.0,
         fontWeight: FontWeight.w900,
         color: Colors.white,
         fontFamily: 'Raleway',
@@ -357,22 +367,30 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
         style: new TextStyle(
-            fontSize: 20.0,
+            fontSize: 16.0,
             fontWeight: FontWeight.w600,
             color: Colors.black45,
             // color: Colors.white,
             fontFamily: "Raleway"),
         children: [
-          new TextSpan(
-            text: "If you have any questions or inquiries, send to us!",
-            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+          new TextSpan(text: "Send to us any questions or inquiries!"),
           WidgetSpan(child: IconButton(
-            icon: const Icon(Icons.email_outlined, size: 20, color: Colors.black45,),
+            icon: const Icon(Icons.email_outlined, size: 16, color: Colors.black45,),
             onPressed: _launchEmail,
-            tooltip: 'Contact'))
+            tooltip: 'Contact')),
+          new TextSpan(text: "\nCardiff NLP"),
+          WidgetSpan(child: IconButton(
+              icon: const Icon(Icons.group_outlined, size: 16, color: Colors.black45,),
+              onPressed: _launchCardiffNLP,
+              tooltip: 'Cardiff NLP Group'))
         ]
     )
   );
+
+  // IconButton(
+  // icon: Image.asset('assets/cardiff_nlp_logo_black.png'),
+  // tooltip: "Cardiff NLP Group",
+  // onPressed: _launchCardiffNLP),
 
   // load sample from SQuAD test split
   var sampleListDict = {
@@ -446,14 +464,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: const Icon(Icons.computer),
                 tooltip: "LMQG: Python Library for QG",
                 onPressed: _launchGithub),
-            IconButton(
-                icon: const Icon(Icons.email),
-                tooltip: 'Contact',
-                onPressed: _launchEmail),
-            IconButton(
-                icon: Image.asset('assets/cardiff_nlp_logo_black.png'),
-                tooltip: "Cardiff NLP Group",
-                onPressed: _launchCardiffNLP),
+            // IconButton(
+            //     icon: const Icon(Icons.email),
+            //     tooltip: 'Contact',
+            //     onPressed: _launchEmail),
+            // IconButton(
+            //     icon: Image.asset('assets/cardiff_nlp_logo_black.png'),
+            //     tooltip: "Cardiff NLP Group",
+            //     onPressed: _launchCardiffNLP),
             SizedBox(width: 15),
             DropdownButton(
               value: language,
@@ -481,7 +499,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(height: 10),
                       subTitle,
                       SizedBox(height: 10),
-                      description,
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 20),
+                            Expanded(child: description),
+                            SizedBox(width: 20),
+                          ]
+                      ),
                       SizedBox(height: 20),
                       Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -690,30 +715,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       SizedBox(height: 40),
-                      // Container(
-                      //     width: double.infinity,
-                      //     color: Color(0xFFFFFFF6),
-                      //     child: Column(
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           // SizedBox(height: 20,),
-                      //           resultHeader,
-                      //           SizedBox(height: 8,),
-                      //           Container(
-                      //               height: 3,
-                      //               width: 300,
-                      //               decoration: BoxDecoration(
-                      //                   color: Colors.black45,
-                      //                   border: Border.all(color: Colors.black45),
-                      //                   borderRadius: BorderRadius.all(Radius.circular(20))
-                      //               )
-                      //           ),
-                      //         ]
-                      //     )
-                      // ),
-                      // SizedBox(height: 30),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 550.0),
                         child: Row(
@@ -760,47 +761,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      // Container(
-                      //     width: double.infinity,
-                      //     // width: 1500.0,
-                      //     color: Color(0xFFFFFFF6),
-                      //     child: Column(
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           SizedBox(height: 20,),
-                      //           resultHeader,
-                      //           SizedBox(height: 8,),
-                      //           Container(
-                      //               height: 3,
-                      //               width: 100,
-                      //               decoration: BoxDecoration(
-                      //                   color: Colors.black45,
-                      //                   border: Border.all(color: Colors.black45),
-                      //                   borderRadius: BorderRadius.all(Radius.circular(20))
-                      //               )
-                      //           ),
-                      //           Container(
-                      //             width: 500,
-                      //             height: 400,
-                      //             child: FittedBox(child: Image.asset('assets/solutions.png'),),
-                      //           ),
-                      //           SizedBox(height: 20),
-                      //         ]
-                      //     )
-                      // ),
                       Container(
-                          width: double.infinity,
+                          // width: double.infinity,
                           // width: 1500.0,
                           color: Color(0xFFFFFFF6),
                           // color: Color(0xFF444729),
                           child: Column(
                             // crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            //   mainAxisSize: MainAxisSize.min,
+                              // mainAxisAlignment: MainAxisAlignment.,
+                              // crossAxisAlignment: CrossAxisAlignment.left,
                               children: [
                                 SizedBox(height: 10,),
                                 footerHeader,
