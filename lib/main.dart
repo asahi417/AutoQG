@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
+
 
 const API_URL = 'https://lmqg-api-ijnzg4eymq-uc.a.run.app/question_generation';
 const sampleFileDict = {
@@ -17,16 +18,7 @@ const sampleFileDict = {
   "Russian": 'assets/squad_test_sample_ru.txt',
   "French": 'assets/squad_test_sample_fr.txt'
 };
-const itemsLanguage = [
-  'English',
-  'Japanese',
-  'German',
-  'Spanish',
-  'Italian',
-  'Korean',
-  'Russian',
-  'French'
-];
+const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
 const itemsQAGTypeDict = {
   "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
   "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
@@ -107,6 +99,7 @@ const subTitleQAGType = {
   "Russian": 'Тип генерации',
   'French': 'Type de génération',
 };
+
 
 Future<String> loadAsset(String sampleFile) async {
   return await rootBundle.loadString(sampleFile);
@@ -255,12 +248,11 @@ class _MyHomePageState extends State<MyHomePage> {
     text: new TextSpan(
       style: new TextStyle(
         fontSize: 25.0,
-        fontWeight: FontWeight.w900,
+        fontWeight: FontWeight.w700,
         color: Colors.black,
         fontFamily: 'RobotoMono',
       ),
       children: <TextSpan>[
-        // new TextSpan(text: 'Automatic'),
         new TextSpan(
             text: 'Write QA with AI',
             // style: new TextStyle(
@@ -268,7 +260,6 @@ class _MyHomePageState extends State<MyHomePage> {
             //     color: Colors.pink[800]
             // )
         ),
-        // new TextSpan(text: 'Generator'),
       ],
     ),
   );
@@ -354,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
         style: TextStyle(
-            fontSize: 25.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.w600,
             color: Colors.black45,
             fontFamily: "Hahmlet"
@@ -367,22 +358,21 @@ class _MyHomePageState extends State<MyHomePage> {
     textAlign: TextAlign.center,
     text: new TextSpan(
         style: new TextStyle(
-            fontSize: 16.0,
+            fontSize: 14.0,
             fontWeight: FontWeight.w600,
-            color: Colors.black45,
-            // color: Colors.white,
+            color: Colors.white,
             fontFamily: "Raleway"),
         children: [
-          new TextSpan(text: "Send to us any questions or inquiries!"),
+          new TextSpan(text: "Send to us any questions or inquiries"),
           WidgetSpan(child: IconButton(
-            icon: const Icon(Icons.email_outlined, size: 16, color: Colors.black45,),
+            icon: const Icon(Icons.email_outlined, size: 14, color: Colors.white,),
             onPressed: _launchEmail,
             tooltip: 'Contact')),
-          new TextSpan(text: "\nCardiff NLP"),
+          new TextSpan(text: "\nCheck our NLP group"),
           WidgetSpan(child: IconButton(
-              icon: const Icon(Icons.group_outlined, size: 16, color: Colors.black45,),
+              icon: const Icon(Icons.group_outlined, size: 14, color: Colors.white,),
               onPressed: _launchCardiffNLP,
-              tooltip: 'Cardiff NLP Group'))
+              tooltip: 'Cardiff NLP'))
         ]
     )
   );
@@ -437,8 +427,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     ScrollController _scrollController = ScrollController();
 
-    return SelectionArea(
-        child: Scaffold(
+    return Scaffold(
           appBar: AppBar(
           actionsIconTheme: IconThemeData(
               size: 30.0,
@@ -672,8 +661,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   icon: Icon(Icons.sports_esports_outlined),
                                                   label: Text('Example'),
                                                   style: ElevatedButton.styleFrom(
-                                                    primary: Colors.pink[800],
-                                                    onPrimary: Colors.white,
+                                                    backgroundColor: Colors.pink[800],
+                                                    foregroundColor: Colors.white,
                                                     onSurface: Colors.grey,
                                                   ),
                                                 ),
@@ -757,33 +746,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               height: 150,
                               child: FittedBox(child: Image.asset('assets/model.png'),),
                             ),
-                            SizedBox(height: 20),
+                            footerHeader,
+                            SizedBox(height: 20,),
                           ],
                         ),
-                      ),
-                      Container(
-                          // width: double.infinity,
-                          // width: 1500.0,
-                          color: Color(0xFFFFFFF6),
-                          // color: Color(0xFF444729),
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            //   mainAxisSize: MainAxisSize.min,
-                              // mainAxisAlignment: MainAxisAlignment.,
-                              // crossAxisAlignment: CrossAxisAlignment.left,
-                              children: [
-                                SizedBox(height: 10,),
-                                footerHeader,
-                                SizedBox(height: 15),
-                              ]
-                          )
                       ),
                     ]
                 )
             )
         )
-    ));
+    );
   }
 
   Container initialReturnView() {return Container();}
@@ -814,14 +786,34 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 300,
                                 decoration: BoxDecoration(
                                     color: Colors.black45,
-                                    border: Border.all(color: Colors.black45),
-                                    borderRadius: BorderRadius.all(Radius.circular(20))
+                                    // border: Border.all(color: Colors.black45),
+                                    // borderRadius: BorderRadius.all(Radius.circular(20))
                                 )
                             ),
                           ]
                       )
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 5),
+                  InkWell(
+                      onTap: () async {
+                        await Clipboard.setData(ClipboardData(text: snapshot.data!.qa.join("\n")));
+                        },
+                      child: RichText(
+                          text: TextSpan(
+                              children: [
+                                TextSpan(text: "Copy to clipboard! ", style: new TextStyle(
+                                    fontSize: 16,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.pink[800],
+                                    fontFamily: fontDict[language]
+                                )),
+                                WidgetSpan(child: Icon(Icons.copy_all_outlined, size: 16, color: Colors.pink[800])),
+                              ]
+                          )
+                      )
+                  ),
+                  SizedBox(height: 10),
                   for ( var i in snapshot.data!.qa)
                     new SelectableText.rich(
                         new TextSpan(
@@ -832,12 +824,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontFamily: fontDict[language]
                             ),
                             children: <TextSpan>[
-                              new TextSpan(text: "Question: " + i['question'].toString()),
+                              new TextSpan(text: i['question'].toString()),
                               new TextSpan(text: '\n'),
                               new TextSpan(
-                                text: "Answer: " + i['answer'].toString(),
+                                text: i['answer'].toString(),
                                 style: new TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     fontStyle: FontStyle.italic,
@@ -848,7 +840,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               new TextSpan(
                                 text: 'Confidence: ' + i['score'].toStringAsFixed(2),
                                 style: new TextStyle(
-                                    fontSize: 15.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.teal,
                                     fontStyle: FontStyle.italic,
