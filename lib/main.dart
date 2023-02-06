@@ -333,9 +333,9 @@ class _MyHomePageState extends State<MyHomePage> {
     text: new TextSpan(
       style: new TextStyle(
         fontSize: 18.0,
-        fontWeight: FontWeight.w900,
+        fontWeight: FontWeight.w200,
         color: Colors.white,
-        fontFamily: 'Raleway',
+        fontFamily: 'RobotoMono',
       ),
       text: "Powered by language model fine-tuning on sequence generation.",
     ),
@@ -346,9 +346,9 @@ class _MyHomePageState extends State<MyHomePage> {
     text: new TextSpan(
         style: TextStyle(
             fontSize: 22.0,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
             color: Colors.black45,
-            fontFamily: "Hahmlet"
+            fontFamily: "RobotoMono"
         ),
         text: "Generated QA Pairs"
     ),
@@ -359,15 +359,16 @@ class _MyHomePageState extends State<MyHomePage> {
     text: new TextSpan(
         style: new TextStyle(
             fontSize: 14.0,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w100,
             color: Colors.white,
-            fontFamily: "Raleway"),
+            fontFamily: "RobotoMono"),
         children: [
           new TextSpan(text: "Send to us any questions or inquiries"),
           WidgetSpan(child: IconButton(
             icon: const Icon(Icons.email_outlined, size: 14, color: Colors.white,),
             onPressed: _launchEmail,
             tooltip: 'Contact')),
+          // SizedBox(height: 13,),
           new TextSpan(text: "\nCheck our NLP group"),
           WidgetSpan(child: IconButton(
               icon: const Icon(Icons.group_outlined, size: 14, color: Colors.white,),
@@ -793,7 +794,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ]
                       )
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 14),
                   InkWell(
                       onTap: () async {
                         await Clipboard.setData(ClipboardData(text: snapshot.data!.qa.join("\n")));
@@ -804,7 +805,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 TextSpan(text: "Copy to clipboard! ", style: new TextStyle(
                                     fontSize: 16,
                                     fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w200,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.pink[800],
                                     fontFamily: fontDict[language]
                                 )),
@@ -813,7 +814,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           )
                       )
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 6),
                   for ( var i in snapshot.data!.qa)
                     new SelectableText.rich(
                         new TextSpan(
