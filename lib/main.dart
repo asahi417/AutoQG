@@ -279,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double numBeams = 5;
   double topP = 0.95;
   String language = 'English';
-  var qagSplit = "sentence";
+  var qagSplit = "paragraph";
   var qagType = {
     "English": "Default",
     "Japanese": "Default",
