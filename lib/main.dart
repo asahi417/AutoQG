@@ -39,7 +39,7 @@ const itemsQAGTypeDict = {
   "French": ['Default']
 };
 const itemsQAGModelDict = {
-  "English": ['Default', 'T5 SMALL', 'T5 BASE', 'T5 LARGE', 'BART BASE', 'BART LARGE'],
+  "English": ['Default', 'T5 SMALL', 'T5 BASE', 'T5 LARGE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'Flan-T5 LARGE', 'BART BASE', 'BART LARGE'],
   "Japanese": ['Default', 'mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
   "German": ['Default', 'mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
   "Spanish": ['Default', 'mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
