@@ -19,7 +19,7 @@ const sampleFileDict = {
   "French": 'assets/squad_test_sample_fr.txt'
 };
 const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
-const itemsQAGProcessItem = ['sentence', 'paragraph'];
+const itemsQAGProcessItem = ['Sentence', 'Paragraph'];
 const itemsQAGTypeDict = {
   // "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
   // "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
@@ -279,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double numBeams = 5;
   double topP = 0.95;
   String language = 'English';
-  var qagSplit = "paragraph";
+  var qagSplit = "Paragraph";
   var qagType = {
     "English": "Default",
     "Japanese": "Default",
