@@ -122,14 +122,14 @@ const subTitleQAGProcess = {
 
 
 const Title = {
-  "English": 'Write QA with AI',
+  "English": 'Generate QA with AI',
   "Japanese": '機械学習AIによるQA生成デモ',
-  "German": 'Schreiben Sie QA mit KI',
-  "Spanish": 'Escribir control de calidad con IA',
-  "Italian": 'Scrivi QA con AI',
-  "Korean": 'AI로 QA 작성',
-  "Russian": 'Пишите QA с ИИ',
-  'French': "Rédiger le QA avec l'IA"
+  "German": 'QA-Generierung durch KI',
+  "Spanish": 'Generación de control de calidad por IA',
+  "Italian": 'Generazione QA tramite intelligenza artificiale',
+  "Korean": 'AI에 의한 QA 생성',
+  "Russian": 'Генерация QA с помощью ИИ',
+  'French': "Génération QA par IA"
 };
 
 const Desc = {
