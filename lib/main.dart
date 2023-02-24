@@ -39,14 +39,14 @@ const itemsQAGTypeDict = {
   "French": ['Default']
 };
 const itemsQAGModelDict = {
-  "English": ['Default', 'T5 SMALL', 'T5 BASE', 'T5 LARGE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'Flan-T5 LARGE', 'BART BASE', 'BART LARGE'],
-  "Japanese": ['Default', 'mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
-  "German": ['Default', 'mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
-  "Spanish": ['Default', 'mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
-  "Italian": ['Default', 'mT5 SMALL (IT)', 'mT5 BASE (IT)', 'mBART LARGE (IT)'],
-  "Korean": ['Default', 'mT5 SMALL (KO)', 'mT5 BASE (KO)', 'mBART LARGE (KO)'],
-  "Russian": ['Default', 'mT5 SMALL (RU)', 'mT5 BASE (RU)', 'mBART LARGE (RU)'],
-  'French': ['Default', 'mT5 SMALL (FR)', 'mT5 BASE (FR)', 'mBART LARGE (FR)']
+  "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'Flan-T5 LARGE', 'BART BASE', 'BART LARGE'],
+  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
+  "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
+  "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
+  "Italian": ['mT5 SMALL (IT)', 'mT5 BASE (IT)', 'mBART LARGE (IT)'],
+  "Korean": ['mT5 SMALL (KO)', 'mT5 BASE (KO)', 'mBART LARGE (KO)'],
+  "Russian": ['mT5 SMALL (RU)', 'mT5 BASE (RU)', 'mBART LARGE (RU)'],
+  'French': ['mT5 SMALL (FR)', 'mT5 BASE (FR)', 'mBART LARGE (FR)']
 };
 const fontDict = {
   "English": 'RobotoMono',
@@ -291,14 +291,14 @@ class _MyHomePageState extends State<MyHomePage> {
     'French': "Default"
   };
   var qagModel = {
-    "English": "Default",
-    "Japanese": "Default",
-    "German": "Default",
-    "Spanish": "Default",
-    "Italian": "Default",
-    "Korean": "Default",
-    "Russian": "Default",
-    'French': "Default"
+    "English": 'T5 SMALL',
+    "Japanese": 'mT5 SMALL (JA)',
+    "German": 'mT5 SMALL (DE)',
+    "Spanish": "mT5 SMALL (ES)",
+    "Italian": "mT5 SMALL (IT)",
+    "Korean": "mT5 SMALL (KO)",
+    "Russian": "mT5 SMALL (RU)",
+    'French': "mT5 SMALL (FR)"
   };
 
   var warningMessage = new RichText(
