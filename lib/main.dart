@@ -21,22 +21,14 @@ const sampleFileDict = {
 const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
 const itemsQAGProcessItem = ['Sentence', 'Paragraph'];
 const itemsQAGTypeDict = {
-  // "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "German": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "Spanish": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "Italian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "Korean": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "Russian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  // "French": ['Default', 'End2End', 'Pipeline', 'Multitask']
-  "English": ['Default'],
-  "Japanese": ['Default'],
-  "German": ['Default'],
-  "Spanish": ['Default'],
-  "Italian": ['Default'],
-  "Korean": ['Default'],
-  "Russian": ['Default'],
-  "French": ['Default']
+  "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "German": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Spanish": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Italian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Korean": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "Russian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
+  "French": ['Default', 'End2End', 'Pipeline', 'Multitask']
 };
 const itemsQAGModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'Flan-T5 LARGE', 'BART BASE', 'BART LARGE'],
