@@ -249,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   Future<Album>? _futureAlbum;
   bool isSwitched = false;
-  double numBeams = 5;
+  double numBeams = 4;
   double topP = 0.95;
   String language = 'English';
   var qagSplit = "Paragraph";
@@ -566,7 +566,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         min: 1,
                                                         max: 10,
                                                         divisions: 9,
-                                                        label: "Number of Beam (degree of exploration at inference): ${numBeams.round().toString()}",
+                                                        label: " Beam Size (degree of exploration at inference) : ${numBeams.round().toString()} ",
                                                         onChanged: (double value) {
                                                           setState(() {numBeams = value;});
                                                         }),
@@ -582,7 +582,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         min: 0.1,
                                                         max: 1,
                                                         divisions: 18,
-                                                        label: "Top P Value (decrease to get less noisy but less diverse generation): ${double.parse((topP).toStringAsFixed(2))}",
+                                                        label: " Top-P (less noisy but less diverse with smaller value): ${double.parse((topP).toStringAsFixed(2))} ",
                                                         onChanged: (double value) {
                                                           setState(() {topP = value;});
                                                         }),
