@@ -21,17 +21,17 @@ const sampleFileDict = {
 const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
 const itemsQAGProcessItem = ['Sentence', 'Paragraph'];
 const itemsQAGTypeDict = {
-  "English": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "Japanese": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "German": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "Spanish": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "Italian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "Korean": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "Russian": ['Default', 'End2End', 'Pipeline', 'Multitask'],
-  "French": ['Default', 'End2End', 'Pipeline', 'Multitask']
+  "English": ['End2End', 'Pipeline'],
+  "Japanese": ['End2End', 'Pipeline'],
+  "German": ['End2End', 'Pipeline'],
+  "Spanish": ['End2End', 'Pipeline'],
+  "Italian": ['End2End', 'Pipeline'],
+  "Korean": ['End2End', 'Pipeline'],
+  "Russian": ['End2End', 'Pipeline'],
+  "French": ['End2End', 'Pipeline']
 };
 const itemsQAGModelDict = {
-  "English": ['T5 SMALL', 'T5 BASE', 'T5 LARGE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'Flan-T5 LARGE', 'BART BASE', 'BART LARGE'],
+  "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'BART BASE'],
   "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
   "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
   "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
@@ -254,14 +254,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String language = 'English';
   var qagSplit = "Paragraph";
   var qagType = {
-    "English": "Default",
-    "Japanese": "Default",
-    "German": "Default",
-    "Spanish": "Default",
-    "Italian": "Default",
-    "Korean": "Default",
-    "Russian": "Default",
-    'French': "Default"
+    "English": "End2End",
+    "Japanese": "End2End",
+    "German": "End2End",
+    "Spanish": "End2End",
+    "Italian": "End2End",
+    "Korean": "End2End",
+    "Russian": "End2End",
+    'French': "End2End"
   };
   var qagModel = {
     "English": 'T5 SMALL',
