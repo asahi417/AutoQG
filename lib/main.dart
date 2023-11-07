@@ -23,7 +23,7 @@ const itemsQAGProcessItem = ['Paragraph', 'Sentence'];
 const itemsQAGTypeDict = {
   "English": ['End2End', 'Pipeline'],
   "Japanese": ['End2End', 'Pipeline'],
-  "German": ['End2End', 'Pipeline'],
+  "German": ['Pipeline'],
   "Spanish": ['End2End', 'Pipeline'],
   "Italian": ['End2End', 'Pipeline'],
   "Korean": ['End2End', 'Pipeline'],
@@ -33,7 +33,7 @@ const itemsQAGTypeDict = {
 const itemsQAGModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE'],
   "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)'],
-  "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)'],
+  "German": ['mT5 SMALL (DE)'],
   "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)'],
   "Italian": ['mT5 SMALL (IT)', 'mT5 BASE (IT)'],
   "Korean": ['mT5 SMALL (KO)', 'mT5 BASE (KO)'],
@@ -256,11 +256,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var qagType = {
     "English": "End2End",
     "Japanese": "Pipeline",
-    "German": "End2End",
+    "German": "Pipeline",
     "Spanish": "End2End",
     "Italian": "End2End",
     "Korean": "End2End",
-    "Russian": "End2End",
+    "Russian": "Pipeline",
     'French': "End2End"
   };
   var qagModel = {
