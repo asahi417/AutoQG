@@ -177,7 +177,7 @@ Future<Album> createAlbum(
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Ops something went wrong! Please try other inputs!');
+    throw Exception('Something went wrong! Please try other inputs!');
   }
 }
 
@@ -287,24 +287,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-  var footerHeader = new RichText(
-    textAlign: TextAlign.center,
-    text: new TextSpan(
-        style: new TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.w100,
-            color: Colors.white,
-            fontFamily: "RobotoMono"),
-        children: [
-          new TextSpan(text: "Cardiff NLP"),
-          WidgetSpan(child: IconButton(
-              icon: const Icon(Icons.group_outlined, size: 14, color: Colors.white,),
-              onPressed: _launchCardiffNLP,
-              tooltip: 'Cardiff NLP'))
-        ]
-    )
-  );
-
   // load sample from SQuAD test split
   var sampleListDict = {
     "English": [],
@@ -376,6 +358,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: const Icon(Icons.computer),
                 tooltip: "LMQG: Python Library for QG",
                 onPressed: _launchGithub),
+            IconButton(
+                icon: const Icon(Icons.group_outlined),
+                tooltip: "CardiffNLP",
+                onPressed: _launchCardiffNLP),
             SizedBox(width: 15),
             DropdownButton(
               value: language,
@@ -692,19 +678,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             SizedBox(width: 20)
                           ],
                         ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        color: Color(0xFFA8906F),
-                        child:  Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            footerHeader,
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
+                      )
                     ]
                 )
             )
