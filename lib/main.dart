@@ -19,7 +19,7 @@ const sampleFileDict = {
   "French": 'assets/squad_test_sample_fr.txt'
 };
 const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
-const itemsQAGProcessItem = ['Sentence', 'Paragraph'];
+const itemsQAGProcessItem = ['Paragraph', 'Sentence'];
 const itemsQAGTypeDict = {
   "English": ['End2End', 'Pipeline'],
   "Japanese": ['End2End', 'Pipeline'],
@@ -31,14 +31,14 @@ const itemsQAGTypeDict = {
   "French": ['End2End', 'Pipeline']
 };
 const itemsQAGModelDict = {
-  "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE', 'BART BASE'],
-  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)', 'mBART LARGE (JA)'],
-  "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)', 'mBART LARGE (DE)'],
-  "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)', 'mBART LARGE (ES)'],
-  "Italian": ['mT5 SMALL (IT)', 'mT5 BASE (IT)', 'mBART LARGE (IT)'],
-  "Korean": ['mT5 SMALL (KO)', 'mT5 BASE (KO)', 'mBART LARGE (KO)'],
-  "Russian": ['mT5 SMALL (RU)', 'mT5 BASE (RU)', 'mBART LARGE (RU)'],
-  'French': ['mT5 SMALL (FR)', 'mT5 BASE (FR)', 'mBART LARGE (FR)']
+  "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE'],
+  "Japanese": ['mT5 SMALL (JA)', 'mT5 BASE (JA)'],
+  "German": ['mT5 SMALL (DE)', 'mT5 BASE (DE)'],
+  "Spanish": ['mT5 SMALL (ES)', 'mT5 BASE (ES)'],
+  "Italian": ['mT5 SMALL (IT)', 'mT5 BASE (IT)'],
+  "Korean": ['mT5 SMALL (KO)', 'mT5 BASE (KO)'],
+  "Russian": ['mT5 SMALL (RU)', 'mT5 BASE (RU)'],
+  'French': ['mT5 SMALL (FR)', 'mT5 BASE (FR)']
 };
 const fontDict = {
   "English": 'RobotoMono',
@@ -255,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var qagSplit = "Paragraph";
   var qagType = {
     "English": "End2End",
-    "Japanese": "End2End",
+    "Japanese": "Pipeline",
     "German": "End2End",
     "Spanish": "End2End",
     "Italian": "End2End",
