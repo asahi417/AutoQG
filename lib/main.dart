@@ -21,14 +21,14 @@ const sampleFileDict = {
 const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'Korean', 'Russian', 'French'];
 const itemsQAGProcessItem = ['Paragraph', 'Sentence'];
 const itemsQAGTypeDict = {
-  "English": ['End2End', 'Pipeline'],
-  "Japanese": ['End2End', 'Pipeline'],
-  "German": ['Pipeline'],
-  "Spanish": ['End2End', 'Pipeline'],
-  "Italian": ['End2End', 'Pipeline'],
-  "Korean": ['End2End', 'Pipeline'],
-  "Russian": ['End2End', 'Pipeline'],
-  "French": ['End2End', 'Pipeline']
+  "English": ['End2End', 'Multitask', 'Pipeline'],
+  "Japanese": ['Multitask', 'Pipeline'],
+  "German": ['Multitask', 'Pipeline'],
+  "Spanish": ['End2End', 'Multitask', 'Pipeline'],
+  "Italian": ['End2End', 'Multitask', 'Pipeline'],
+  "Korean": ['End2End', 'Multitask', 'Pipeline'],
+  "Russian": ['Multitask', 'Pipeline'],
+  "French": ['End2End', 'Multitask', 'Pipeline']
 };
 const itemsQAGModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE'],
@@ -255,12 +255,12 @@ class _MyHomePageState extends State<MyHomePage> {
   var qagSplit = "Paragraph";
   var qagType = {
     "English": "End2End",
-    "Japanese": "Pipeline",
-    "German": "Pipeline",
+    "Japanese": "Multitask",
+    "German": "Multitask",
     "Spanish": "End2End",
     "Italian": "End2End",
     "Korean": "End2End",
-    "Russian": "Pipeline",
+    "Russian": "Multitask",
     'French': "End2End"
   };
   var qagModel = {
