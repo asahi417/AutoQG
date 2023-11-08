@@ -22,12 +22,12 @@ const itemsLanguage = ['English', 'Japanese', 'German', 'Spanish', 'Italian', 'K
 const itemsQAGProcessItem = ['Paragraph', 'Sentence'];
 const itemsQAGTypeDict = {
   "English": ['End2End', 'Multitask', 'Pipeline'],
-  "Japanese": ['Multitask', 'Pipeline'],
+  "Japanese": ['End2End', 'Multitask', 'Pipeline'],
   "German": ['Multitask', 'Pipeline'],
   "Spanish": ['End2End', 'Multitask', 'Pipeline'],
   "Italian": ['End2End', 'Multitask', 'Pipeline'],
   "Korean": ['End2End', 'Multitask', 'Pipeline'],
-  "Russian": ['Multitask', 'Pipeline'],
+  "Russian": ['End2End', 'Multitask', 'Pipeline'],
   "French": ['End2End', 'Multitask', 'Pipeline']
 };
 const itemsQAGModelDict = {
