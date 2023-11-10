@@ -40,7 +40,7 @@ const itemsQAGTypeDict = {
   "Korean": ['End2End', 'Multitask', 'Pipeline'],
   "Russian": ['End2End', 'Multitask', 'Pipeline'],
   "French": ['End2End', 'Multitask', 'Pipeline'],
-  "Chinese": ['End2End', 'Multitask', 'Pipeline']
+  "Chinese": ['End2End']
 };
 const itemsQAGModelDict = {
   "English": ['T5 SMALL', 'T5 BASE', 'Flan-T5 SMALL', 'Flan-T5 BASE'],
@@ -284,7 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Korean": "End2End",
     "Russian": "Multitask",
     'French': "End2End",
-    "Chinese": "Multitask"
+    "Chinese": "End2End"
   };
   var qagModel = {
     "English": 'T5 SMALL',
